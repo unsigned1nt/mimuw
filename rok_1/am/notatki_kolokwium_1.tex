@@ -1,0 +1,492 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[a4paper]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage{enumitem}
+\setlist[itemize]{label=-, topsep=3pt, itemsep=2pt}
+\setlist[enumerate]{topsep=3pt, itemsep=2pt}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+
+\theoremstyle{plain}
+\newtheorem*{twierdzenie}{Twierdzenie}
+\newtheorem*{wniosek}{Wniosek}
+\newtheorem*{kryterium}{Kryterium}
+
+\theoremstyle{definition}
+\newtheorem*{definicja}{Definicja}
+\newtheorem*{uwaga}{Uwaga}
+\newtheorem*{przyklad}{Przykład}
+
+\title{\textbf{Analiza matematyczna I.1} -- notatki do kolokwium nr 1}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Ciągi liczbowe w $\mathbb{R}$ i $\mathbb{C}$}
+
+\subsection{Definicja granicy i specyfika ciągów zespolonych}
+
+\begin{definicja}[Granica właściwa]
+Ciąg $(a_n)$ o wyrazach w $\mathbb{R}$ lub $\mathbb{C}$ ma granicę właściwą $g$ (zapisujemy $\lim_{n\to\infty} a_n = g$), jeżeli
+\[
+\forall_{\varepsilon > 0} \; \exists_{N \in \mathbb{N}} \; \forall_{n \geqslant N} \quad \lvert a_n - g \rvert < \varepsilon.
+\]
+\end{definicja}
+
+\begin{definicja}[Granice niewłaściwe w $\mathbb{R}$]
+Dla ciągu rzeczywistego $(a_n)$ piszemy $\lim_{n\to\infty} a_n = +\infty$, gdy
+\[
+\forall_{M \in \mathbb{R}} \; \exists_{N \in \mathbb{N}} \; \forall_{n \geqslant N} \quad a_n > M.
+\]
+Analogicznie $\lim_{n\to\infty} a_n = -\infty \iff \forall_{M \in \mathbb{R}} \; \exists_{N \in \mathbb{N}} \; \forall_{n \geqslant N} \quad a_n < M$. W zbiorze $\mathbb{C}$ brak porządku liniowego, wobec czego nie rozważa się granic $-\infty$ ani $+\infty$ (rozważa się jedynie $\lim_{n\to\infty} z_n = \infty \iff \lim_{n\to\infty} \lvert z_n \rvert = +\infty$).
+\end{definicja}
+
+\begin{twierdzenie}[Charakteryzacja zbieżności w $\mathbb{C}$]
+Niech $z_n = x_n + i y_n \in \mathbb{C}$, gdzie $x_n, y_n \in \mathbb{R}$, oraz $g = x + iy \in \mathbb{C}$. Wówczas
+\[
+\lim_{n\to\infty} z_n = x + iy \iff \left( \lim_{n\to\infty} x_n = x \quad \text{oraz} \quad \lim_{n\to\infty} y_n = y \right).
+\]
+\end{twierdzenie}
+
+\begin{uwaga}[Własności ciągów w $\mathbb{C}$]
+\begin{itemize}
+    \item W zbiorze $\mathbb{C}$ zachowane są wszystkie twierdzenia arytmetyczne o granicach (granica sumy, różnicy, iloczynu oraz ilorazu przy niezerowej granicy mianownika).
+    \item Nie stosuje się bezpośrednio pojęcia monotoniczności ani twierdzenia o trzech ciągach do samych wyrazów $z_n \in \mathbb{C}$.
+    \item Zachodzi twierdzenie o dwóch ciągach dla modułu: jeśli $\lvert z_n - g \rvert \leqslant a_n$ od pewnego miejsca oraz $\lim_{n\to\infty} a_n = 0$, to $\lim_{n\to\infty} z_n = g$.
+    \item Jeśli $z_n \to g$, to $\lvert z_n \rvert \to \lvert g \rvert$. Implikacja odwrotna zachodzi wyłącznie dla $g = 0$: $\lim_{n\to\infty} z_n = 0 \iff \lim_{n\to\infty} \lvert z_n \rvert = 0$.
+\end{itemize}
+\end{uwaga}
+
+\subsection{Podciągi, twierdzenie Bolzano--Weierstrassa i granice cząstkowe}
+
+\begin{twierdzenie}[Bolzano--Weierstrassa]
+Każdy ograniczony ciąg liczb rzeczywistych (oraz zespolonych) zawiera podciąg zbieżny do granicy właściwej.
+\end{twierdzenie}
+
+\begin{wniosek}[Kryterium zbieżności przez podciągi]
+Jeśli ciąg $(a_n)$ o wyrazach w $\mathbb{R}$ lub $\mathbb{C}$ jest ograniczony i wszystkie jego zbieżne podciągi mają tę samą granicę $g$, to cały ciąg $(a_n)$ jest zbieżny do $g$.
+\end{wniosek}
+
+\begin{definicja}[Granica dolna i górna]
+Dla dowolnego ciągu rzeczywistego $(a_n)$ określamy w $\overline{\mathbb{R}} = \mathbb{R} \cup \{-\infty, +\infty\}$:
+\[
+\liminf_{n\to\infty} a_n = \lim_{n\to\infty} \left(\inf_{k \geqslant n} a_k\right), \qquad \limsup_{n\to\infty} a_n = \lim_{n\to\infty} \left(\sup_{k \geqslant n} a_k\right).
+\]
+Są to odpowiednio najmniejszy i największy punkt skupienia ciągu $(a_n)$ w $\overline{\mathbb{R}}$ (tzn. najmniejsza i największa granica jego podciągów).
+\end{definicja}
+
+\begin{twierdzenie}[Związek zbieżności z $\liminf$ i $\limsup$]
+Ciąg rzeczywisty $(a_n)$ ma granicę $g \in \overline{\mathbb{R}}$ wtedy i tylko wtedy, gdy $\liminf_{n\to\infty} a_n = \limsup_{n\to\infty} a_n = g$.
+\end{twierdzenie}
+
+\subsection{Warunek Cauchy'ego}
+
+\begin{twierdzenie}[Kryterium Cauchy'ego zbieżności ciągu]
+Ciąg $(a_n)$ o wyrazach w $\mathbb{R}$ lub $\mathbb{C}$ jest zbieżny do granicy właściwej wtedy i tylko wtedy, gdy spełnia warunek Cauchy'ego:
+\[
+\forall_{\varepsilon > 0} \; \exists_{N \in \mathbb{N}} \; \forall_{m, n \geqslant N} \quad \lvert a_m - a_n \rvert < \varepsilon.
+\]
+\end{twierdzenie}
+
+\begin{uwaga}
+Warunek $\lim_{n\to\infty} \lvert a_{n+1} - a_n \rvert = 0$ jest warunkiem koniecznym, lecz niewystarczającym do spełnienia warunku Cauchy'ego. Dla ciągu sum częściowych szeregu harmonicznego $a_n = \sum_{k=1}^n \frac{1}{k}$ zachodzi $a_{n+1} - a_n = \frac{1}{n+1} \to 0$, ale
+\[
+\lvert a_{2n} - a_n \rvert = \sum_{k=n+1}^{2n} \frac{1}{k} \geqslant n \cdot \frac{1}{2n} = \frac{1}{2},
+\]
+zatem $(a_n)$ nie spełnia warunku Cauchy'ego.
+\end{uwaga}
+
+\section{Metody obliczania granic ciągów}
+
+\subsection{Twierdzenie o trzech ciągach i nierówności pomocnicze}
+
+\begin{twierdzenie}[O trzech ciągach]
+Jeżeli dla $n \geqslant N_0$ zachodzi $a_n \leqslant b_n \leqslant c_n$ oraz $\lim_{n\to\infty} a_n = \lim_{n\to\infty} c_n = g \in \overline{\mathbb{R}}$, to $\lim_{n\to\infty} b_n = g$.
+\end{twierdzenie}
+
+\begin{twierdzenie}[O dwóch ciągach]
+Jeżeli dla $n \geqslant N_0$ zachodzi $a_n \leqslant b_n$ oraz $\lim_{n\to\infty} a_n = +\infty$, to $\lim_{n\to\infty} b_n = +\infty$ (analogicznie dla granicy $-\infty$).
+\end{twierdzenie}
+
+\noindent\textbf{Nierówności wykorzystywane przy szacowaniu granic:}
+\begin{enumerate}
+    \item \emph{Nierówność Bernoulliego:} dla każdego $x \geqslant -1$ oraz $n \in \mathbb{N}$ zachodzi $(1 + x)^n \geqslant 1 + nx$.
+    \item \emph{Nierówności między średnimi:} dla $x_1, \dots, x_n > 0$ zachodzi
+    \[
+    \frac{n}{\frac{1}{x_1} + \dots + \frac{1}{x_n}} \leqslant \sqrt[n]{x_1 x_2 \cdots x_n} \leqslant \frac{x_1 + \dots + x_n}{n} \leqslant \sqrt{\frac{x_1^2 + \dots + x_n^2}{n}}.
+    \]
+    \item \emph{Oszacowania dla funkcji wykładniczej i logarytmu:}
+    \[
+    \forall_{x \in \mathbb{R}} \quad e^x \geqslant 1 + x, \qquad \forall_{x > -1} \quad \frac{x}{1 + x} \leqslant \ln(1 + x) \leqslant x.
+    \]
+    \item \emph{Oszacowania trygonometryczne:} dla $x \in \left(0, \frac{\pi}{2}\right)$ zachodzi $\sin x < x < \tan x$.
+\end{enumerate}
+
+\subsection{Zastosowania szacowań dla pierwiastków i sum}
+
+\begin{przyklad}[Wyciąganie dominującego składnika spod pierwiastka]
+Dla ustalonych liczb $a_1, a_2, \dots, a_k > 0$ oraz $M = \max(a_1, \dots, a_k)$ zachodzi
+\[
+M = \sqrt[n]{M^n} \leqslant \sqrt[n]{a_1^n + a_2^n + \dots + a_k^n} \leqslant \sqrt[n]{k \cdot M^n} = \sqrt[n]{k} \cdot M \xrightarrow{n\to\infty} M,
+\]
+skąd $\lim_{n\to\infty} \sqrt[n]{a_1^n + a_2^n + \dots + a_k^n} = \max(a_1, \dots, a_k)$.
+\end{przyklad}
+
+\begin{przyklad}[Granica $\lim_{n\to\infty} {\sqrt[n]{n} = 1}$]
+Stosując nierówność między średnią geometryczną a arytmetyczną dla $n$ liczb: $\underbrace{1, \dots, 1}_{n-2}, \sqrt{n}, \sqrt{n}$, otrzymujemy dla $n \geqslant 2$:
+\[
+1 \leqslant \sqrt[n]{n} = \sqrt[n]{1 \cdots 1 \cdot \sqrt{n} \cdot \sqrt{n}} \leqslant \frac{(n-2)\cdot 1 + 2\sqrt{n}}{n} = 1 - \frac{2}{n} + \frac{2}{\sqrt{n}} \xrightarrow{n\to\infty} 1.
+\]
+\end{przyklad}
+
+\begin{przyklad}[Porównanie sum o zmiennej liczbie składników]
+\begin{itemize}
+    \item $\lim_{n\to\infty} \sum_{k=1}^n \frac{1}{\sqrt{n^2 + k}} = 1$, ponieważ $\frac{n}{\sqrt{n^2 + n}} \leqslant \sum_{k=1}^n \frac{1}{\sqrt{n^2 + k}} \leqslant \frac{n}{\sqrt{n^2 + 1}}$.
+    \item $\lim_{n\to\infty} \sum_{k=1}^n \frac{1}{\sqrt{n + k}} = +\infty$, ponieważ $\sum_{k=1}^n \frac{1}{\sqrt{n + k}} \geqslant \frac{n}{\sqrt{2n}} = \sqrt{\frac{n}{2}} \to +\infty$.
+    \item $\lim_{n\to\infty} \sum_{k=1}^n \frac{1}{n + k} = \ln 2$ (np. z szacowania $\frac{1}{k+1} < \ln\left(1 + \frac{1}{k}\right) < \frac{1}{k}$ lub jako suma całkowa Riemanna $\frac{1}{n}\sum_{k=1}^n \frac{1}{1 + k/n}$).
+\end{itemize}
+\end{przyklad}
+
+\subsection{Wyrażenia wykładnicze ($1^\infty$, $0^0$, $\infty^0$) i hierarchia wzrostu}
+
+Dla ciągów $(a_n)$ o wyrazach dodatnich oraz dowolnych $(b_n)$ korzystamy z tożsamości
+\[
+a_n^{b_n} = \exp\bigl(b_n \ln a_n\bigr)
+\]
+oraz z ciągłości funkcji $\exp$, sprowadzając badanie granicy do wykładnika $\lim_{n\to\infty} (b_n \ln a_n)$.
+
+\begin{wniosek}[Symbol nieoznaczony $1^\infty$]
+Jeżeli $a_n > 0$, $\lim_{n\to\infty} a_n = 1$ oraz $\lim_{n\to\infty} \lvert b_n \rvert = +\infty$, to
+\[
+\lim_{n\to\infty} a_n^{b_n} = \exp\left( \lim_{n\to\infty} b_n (a_n - 1) \right),
+\]
+o ile granica w wykładniku istnieje w $\overline{\mathbb{R}}$. Wynika to z rozkładu $b_n \ln a_n = b_n(a_n - 1) \cdot \frac{\ln(1 + (a_n - 1))}{a_n - 1}$ dla $a_n \neq 1$.
+\end{wniosek}
+
+\noindent\textbf{Granice podstawowe} (dla dowolnego ciągu $x_n \to 0$, $x_n \neq 0$):
+\[
+\begin{array}{rcl}
+\displaystyle \lim_{n\to\infty} \frac{e^{x_n}-1}{x_n} &=& 1 \\[0.8em]
+\displaystyle \lim_{n\to\infty} \frac{a^{x_n}-1}{x_n} &=& \ln a \quad (a>0) \\[0.8em]
+\displaystyle \lim_{n\to\infty} \frac{\ln(1+x_n)}{x_n} &=& 1 \\[0.8em]
+\displaystyle \lim_{n\to\infty} \frac{(1+x_n)^\alpha-1}{x_n} &=& \alpha
+\end{array}
+\]
+
+\noindent\textbf{Hierarchia temp wzrostu ciągów} (dla ustalonych $\alpha > 0$, $\beta > 0$, $a > 1$, gdzie $u_n \ll v_n$ oznacza $\lim_{n\to\infty} \frac{u_n}{v_n} = 0$):
+\[
+\ln^\alpha n \ll n^\beta \ll a^n \ll n! \ll n^n.
+\]
+
+\subsection{Twierdzenie Stolza--Cesàro i jego wnioski}
+
+\begin{twierdzenie}[Stolza--Cesàro, przypadek $\frac{*}{\infty}$]
+Niech $(a_n)$ i $(b_n)$ będą ciągami liczb rzeczywistych takimi, że od pewnego miejsca $(b_n)$ jest ściśle rosnący oraz $\lim_{n\to\infty} b_n = +\infty$. Jeżeli istnieje granica właściwa lub niewłaściwa
+\[
+\lim_{n\to\infty} \frac{a_{n+1} - a_n}{b_{n+1} - b_n} = g \in \overline{\mathbb{R}},
+\]
+to $\lim_{n\to\infty} \frac{a_n}{b_n} = g$.
+\end{twierdzenie}
+
+\begin{twierdzenie}[Stolza--Cesàro, przypadek $\frac{0}{0}$]
+Niech $\lim_{n\to\infty} a_n = 0$ oraz $\lim_{n\to\infty} b_n = 0$, przy czym $(b_n)$ jest od pewnego miejsca ściśle monotoniczny. Jeżeli istnieje $\lim_{n\to\infty} \frac{a_{n+1} - a_n}{b_{n+1} - b_n} = g \in \overline{\mathbb{R}}$, to $\lim_{n\to\infty} \frac{a_n}{b_n} = g$.
+\end{twierdzenie}
+
+\begin{uwaga}
+Twierdzenie odwrotne nie zachodzi. Przykładowo dla $a_n = (-1)^n$ oraz $b_n = n$ mamy $\lim_{n\to\infty} \frac{a_n}{b_n} = 0$, natomiast iloraz różnic $\frac{a_{n+1} - a_n}{b_{n+1} - b_n} = 2(-1)^{n+1}$ nie ma granicy.
+\end{uwaga}
+
+\begin{wniosek}[Wnioski z twierdzenia Stolza--Cesàro]
+\begin{enumerate}
+    \item \emph{Średnia arytmetyczna (twierdzenie Cauchy'ego):} jeśli $\lim_{n\to\infty} x_n = g \in \overline{\mathbb{R}}$, to $\lim_{n\to\infty} \frac{x_1 + x_2 + \dots + x_n}{n} = g$.
+    \item \emph{Średnia geometryczna:} jeśli $x_n > 0$ oraz $\lim_{n\to\infty} x_n = g \in [0, +\infty]$, to $\lim_{n\to\infty} \sqrt[n]{x_1 x_2 \cdots x_n} = g$ (wynika z punktu 1 po zlogarytmowaniu).
+    \item \emph{Związek ilorazu z pierwiastkiem:} jeśli $x_n > 0$ oraz $\lim_{n\to\infty} \frac{x_{n+1}}{x_n} = g \in [0, +\infty]$, to $\lim_{n\to\infty} \sqrt[n]{x_n} = g$ (stosujemy punkt 2 dla $y_1 = x_1$, $y_k = \frac{x_k}{x_{k-1}}$).
+    \item \emph{Sumy potęg:} dla dowolnego ustalonego $k > -1$ zachodzi $\lim_{n\to\infty} \frac{1^k + 2^k + \dots + n^k}{n^{k+1}} = \frac{1}{k+1}$.
+\end{enumerate}
+\end{wniosek}
+
+\begin{przyklad}
+Obliczenie $\lim_{n\to\infty} \frac{\sqrt[n]{n!}}{n}$. Przyjmujemy $x_n = \frac{n!}{n^n}$, skąd $\frac{\sqrt[n]{n!}}{n} = \sqrt[n]{x_n}$. Ponieważ
+\[
+\frac{x_{n+1}}{x_n} = \frac{(n+1)!}{(n+1)^{n+1}} \cdot \frac{n^n}{n!} = \left(\frac{n}{n+1}\right)^n = \frac{1}{\left(1 + \frac{1}{n}\right)^n} \xrightarrow{n\to\infty} \frac{1}{e},
+\]
+na mocy wniosku 3 otrzymujemy $\lim_{n\to\infty} \frac{\sqrt[n]{n!}}{n} = \frac{1}{e}$.
+\end{przyklad}
+
+\section{Ciągi rekurencyjne}
+
+\subsection{Punkty stałe, ograniczoność i monotoniczność}
+
+Rozważamy ciąg zadany wzorem $x_{n+1} = f(x_n)$ z danym wyrazem początkowym $x_1$.
+
+\begin{twierdzenie}[Warunek konieczny na granicę]
+Jeżeli $\lim_{n\to\infty} x_n = g \in \mathbb{R}$ oraz funkcja $f$ jest ciągła w punkcie $g$, to $g = f(g)$.
+\end{twierdzenie}
+
+\begin{twierdzenie}[Ciąg monotoniczny i ograniczony]
+Każdy ciąg liczb rzeczywistych, który jest monotoniczny i ograniczony, jest zbieżny do granicy właściwej.
+\end{twierdzenie}
+
+\noindent\textbf{Własność monotoniczności dla funkcji niemalejącej:}
+Jeżeli istnieje przedział niezmienniczy $I$ (tzn. $f(I) \subset I$) taki, że $x_1 \in I$, oraz funkcja $f$ jest \emph{niemalejąca} na $I$, to cały ciąg $(x_n)$ jest monotoniczny:
+\begin{itemize}
+    \item jeśli $x_2 \geqslant x_1$, to indukcyjnie $x_{n+1} = f(x_n) \geqslant f(x_{n-1}) = x_n$ (ciąg niemalejący);
+    \item jeśli $x_2 \leqslant x_1$, to indukcyjnie $x_{n+1} \leqslant x_n$ (ciąg nierosnący).
+\end{itemize}
+
+\subsection{Podciągi monotoniczne dla funkcji nierosnących}
+
+Jeżeli na przedziale niezmienniczym $I$ funkcja $f$ jest \emph{nierosnąca} ($x \leqslant y \implies f(x) \geqslant f(y)$), to złożenie $h(x) = f(f(x))$ jest funkcją \emph{niemalejącą} na $I$. Wówczas:
+\begin{itemize}
+    \item podciąg parzysty $y_n = x_{2n}$ spełnia rekurencję $y_{n+1} = h(y_n)$ i jest monotoniczny;
+    \item podciąg nieparzysty $z_n = x_{2n-1}$ spełnia rekurencję $z_{n+1} = h(z_n)$ i również jest monotoniczny.
+\end{itemize}
+Jeżeli $(x_n)$ jest ograniczony, to istnieją granice właściwe $g_1 = \lim_{n\to\infty} x_{2n}$ oraz $g_2 = \lim_{n\to\infty} x_{2n-1}$ będące rozwiązaniami równania $h(g) = g$. Ciąg $(x_n)$ jest zbieżny wtedy i tylko wtedy, gdy $g_1 = g_2$.
+
+\subsection{Metoda odwzorowania zwężającego}
+
+\begin{twierdzenie}[Zasada odwzorowań zwężających na przedziale]
+Niech $I \subset \mathbb{R}$ będzie przedziałem domkniętym takim, że $f(I) \subset I$. Jeżeli istnieje stała $q \in [0, 1)$ taka, że
+\[
+\forall_{x, y \in I} \quad \lvert f(x) - f(y) \rvert \leqslant q \lvert x - y \rvert
+\]
+(w szczególności z twierdzenia Lagrange'a wystarcza $\lvert f'(x) \rvert \leqslant q < 1$ wewnątrz $I$), to dla dowolnego $x_1 \in I$ ciąg $x_{n+1} = f(x_n)$ zbiega do jedynego punktu stałego $g \in I$.
+\end{twierdzenie}
+
+\begin{uwaga}[Dowód z warunku Cauchy'ego]
+Indukcyjnie zachodzi $\lvert x_{n+1} - x_n \rvert \leqslant q^{n-1} \lvert x_2 - x_1 \rvert$. Dla $m > n$ z nierówności trójkąta otrzymujemy
+\[
+\lvert x_m - x_n \rvert \leqslant \sum_{k=n}^{m-1} \lvert x_{k+1} - x_k \rvert \leqslant \lvert x_2 - x_1 \rvert \sum_{k=n}^{m-1} q^{k-1} \leqslant \lvert x_2 - x_1 \rvert \frac{q^{n-1}}{1 - q} \xrightarrow{n\to\infty} 0,
+\]
+co dowodzi spełnienia warunku Cauchy'ego przez ciąg $(x_n)$.
+\end{uwaga}
+
+\subsection{Tempo zbieżności i podstawienia}
+
+\begin{przyklad}[Badanie tempa zbieżności za pomocą twierdzenia Stolza]
+Niech $x_1 \in (0, 1)$ oraz $x_{n+1} = x_n - x_n^2$. Ciąg $(x_n)$ jest malejący, ograniczony z dołu przez $0$ i zbiega do $0$. Aby wyznaczyć $\lim_{n\to\infty} n x_n$, zapisujemy $n x_n = \frac{n}{1/x_n}$ i stosujemy twierdzenie Stolza dla $a_n = n$, $b_n = \frac{1}{x_n} \to +\infty$:
+\[
+\frac{b_{n+1} - b_n}{a_{n+1} - a_n} = \frac{1}{x_{n+1}} - \frac{1}{x_n} = \frac{x_n - x_{n+1}}{x_n x_{n+1}} = \frac{x_n^2}{x_n(x_n - x_n^2)} = \frac{1}{1 - x_n} \xrightarrow{n\to\infty} 1.
+\]
+Stąd $\lim_{n\to\infty} \frac{b_n}{n} = 1$, czyli $\lim_{n\to\infty} n x_n = 1$. Analogicznie dla $x_{n+1} = \sin x_n$ ($x_1 \in (0, \pi)$) badanie $\frac{1}{x_{n+1}^2} - \frac{1}{x_n^2} \to \frac{1}{3}$ daje $\lim_{n\to\infty} \sqrt{n}\, x_n = \sqrt{3}$.
+\end{przyklad}
+
+\noindent\textbf{Wybrane podstawienia sprowadzające rekurencje do postaci jawnej:}
+\begin{itemize}
+    \item \emph{Rekurencja liniowa} $x_{n+1} = a x_n + b$ ($a \neq 1$): dla $g = \frac{b}{1-a}$ ciąg $y_n = x_n - g$ jest geometryczny ($y_{n+1} = a y_n$).
+    \item \emph{Rekurencja homograficzna} $x_{n+1} = \frac{a x_n + b}{c x_n + d}$: przy dwóch różnych punktach stałych $g_1, g_2$ ciąg $y_n = \frac{x_n - g_1}{x_n - g_2}$ jest geometryczny; przy jednym podwójnym punkcie stałym $g$ ciąg $y_n = \frac{1}{x_n - g}$ jest arytmetyczny.
+    \item \emph{Rekurencja potęgowo-iloczynowa} (gdy $x_n > 0$): zlogarytmowanie obu stron sprowadza ją do rekurencji liniowej.
+\end{itemize}
+
+\section{Funkcja wykładnicza i funkcje trygonometryczne na $\mathbb{R}$}
+
+\subsection{Definicje i własności funkcji wykładniczej}
+
+\noindent\textbf{Równoważne definicje funkcji $\exp \colon \mathbb{R} \to (0, +\infty)$:}
+\begin{enumerate}
+    \item \emph{Definicja przez szereg potęgowy} (zbieżny bezwzględnie dla każdego $x \in \mathbb{R}$ na mocy kryterium d'Alemberta):
+    \[
+    \exp(x) = \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots
+    \]
+    \item \emph{Definicja graniczna (Eulera):}
+    \[
+    \exp(x) = \lim_{n\to\infty} \left(1 + \frac{x}{n}\right)^n.
+    \]
+    \item \emph{Definicja przez funkcję odwrotną do logarytmu:} definiujemy $\ln x = \int_1^x \frac{dt}{t}$ dla $x > 0$ (ściśle rosnąca bijekcja $(0, +\infty) \to \mathbb{R}$), a następnie $\exp = \ln^{-1}$.
+    \item \emph{Potęga o wykładniku rzeczywistym $a^x$ ($a > 0$):} dla $q = \frac{k}{m} \in \mathbb{Q}$ ($m \in \mathbb{N}_+$) kładziemy $a^q = \sqrt[m]{a^k}$, zaś dla $x \in \mathbb{R}$ przyjmujemy $a^x = \lim_{n\to\infty} a^{q_n}$ dla dowolnego ciągu wymiernego $q_n \to x$. Przy oznaczeniu $e = \exp(1) = \sum_{n=0}^\infty \frac{1}{n!}$ zachodzi $\exp(x) = e^x$ oraz $a^x = \exp(x \ln a)$.
+\end{enumerate}
+
+\noindent\textbf{Podstawowe własności:}
+\begin{itemize}
+    \item \emph{Równanie funkcyjne:} $\exp(x + y) = \exp(x)\exp(y)$ dla wszystkich $x, y \in \mathbb{R}$ (wynika z iloczynu Cauchy'ego szeregów bezwzględnie zbieżnych i wzoru dwumianowego Newtona).
+    \item \emph{Dodatniość:} $\exp(0) = 1$ oraz $\exp(-x) = \frac{1}{\exp(x)} \neq 0$; ponadto $\exp(x) = \bigl(\exp(x/2)\bigr)^2 > 0$ dla każdego $x \in \mathbb{R}$.
+    \item \emph{Monotoniczność i granice:} $\exp$ jest funkcją ściśle rosnącą, $\lim_{x\to+\infty} \exp(x) = +\infty$, $\lim_{x\to-\infty} \exp(x) = 0$.
+    \item \emph{Różniczkowalność:} $\exp \in C^\infty(\mathbb{R})$ oraz $(\exp x)' = \exp x$ dla każdego $x \in \mathbb{R}$.
+\end{itemize}
+
+\subsection{Definicje i własności funkcji trygonometrycznych}
+
+\noindent\textbf{Analityczne definicje funkcji $\sin$ i $\cos$ na $\mathbb{R}$:}
+\begin{enumerate}
+    \item \emph{Definicja przez szeregi potęgowe} (zbieżne bezwzględnie na całym $\mathbb{R}$):
+    \[
+    \sin x = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!} x^{2n+1}, \qquad \cos x = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n)!} x^{2n}.
+    \]
+    \item \emph{Definicja przez zespoloną funkcję wykładniczą (wzory Eulera):} przyjmując $\exp(z) = \sum_{n=0}^\infty \frac{z^n}{n!}$ dla $z \in \mathbb{C}$, zachodzi $e^{ix} = \cos x + i\sin x$ dla $x \in \mathbb{R}$, skąd
+    \[
+    \cos x = \frac{e^{ix} + e^{-ix}}{2}, \qquad \sin x = \frac{e^{ix} - e^{-ix}}{2i}.
+    \]
+    \item \emph{Definicja całkowa:} $\arcsin x = \int_0^x \frac{dt}{\sqrt{1 - t^2}}$ dla $x \in [-1, 1]$, a $\sin$ jako funkcja odwrotna na $[-\frac{\pi}{2}, \frac{\pi}{2}]$, rozszerzona okresowo.
+\end{enumerate}
+
+\noindent\textbf{Podstawowe własności:}
+\begin{itemize}
+    \item \emph{Parzystość i jedynka trygonometryczna:} $\cos(-x) = \cos x$, $\sin(-x) = -\sin x$ oraz $\sin^2 x + \cos^2 x = e^{ix}e^{-ix} = e^0 = 1$ dla każdego $x \in \mathbb{R}$.
+    \item \emph{Wzory addytywne:} wynikają bezpośrednio z porównania części rzeczywistej i urojonej w równości $e^{i(x+y)} = e^{ix} e^{iy}$.
+    \item \emph{Różniczkowalność:} $\sin, \cos \in C^\infty(\mathbb{R})$, $(\sin x)' = \cos x$ oraz $(\cos x)' = -\sin x$.
+    \item \emph{Definicja liczby $\pi$ i okresowość:} ponieważ $\cos 0 = 1 > 0$ oraz $\cos 2 < 0$, z własności Darboux funkcja $\cos$ ma miejsce zerowe w $(0, 2)$. Liczbę $\pi$ definiuje się jako dwukrotność najmniejszego dodatniego miejsca zerowego funkcji $\cos$, tj. $\cos\frac{\pi}{2} = 0$ oraz $\sin\frac{\pi}{2} = 1$. Stąd $e^{i\pi/2} = i$, $e^{i\pi} = -1$, $e^{2\pi i} = 1$, co implikuje okresowość obu funkcji z okresem $2\pi$.
+    \item \emph{Granice podstawowe:}
+    \[
+    \lim_{x\to 0} \frac{\sin x}{x} = 1, \qquad \lim_{x\to 0} \frac{1 - \cos x}{x^2} = \frac{1}{2}, \qquad \lim_{x\to 0} \frac{\tan x}{x} = 1.
+    \]
+\end{itemize}
+
+\section{Szeregi liczbowe}
+
+\subsection{Pojęcia podstawowe, warunek Cauchy'ego i iloczyn Cauchy'ego}
+
+\begin{definicja}[Suma szeregu]
+Niech $(a_n)$ będzie ciągiem o wyrazach w $\mathbb{R}$ lub $\mathbb{C}$, a $S_N = \sum_{n=1}^N a_n$ jego $N$-tą sumą częściową. Szereg $\sum_{n=1}^\infty a_n$ nazywamy zbieżnym do sumy $S \in \mathbb{C}$, jeżeli $\lim_{N\to\infty} S_N = S$. W przeciwnym razie szereg nazywamy rozbieżnym.
+\end{definicja}
+
+\begin{twierdzenie}[Warunek konieczny zbieżności]
+Jeżeli szereg $\sum_{n=1}^\infty a_n$ jest zbieżny, to $\lim_{n\to\infty} a_n = 0$. (Implikacja odwrotna nie zachodzi, np. dla szeregu harmonicznego $\sum_{n=1}^\infty \frac{1}{n} = +\infty$).
+\end{twierdzenie}
+
+\begin{twierdzenie}[Warunek Cauchy'ego dla szeregów]
+Szereg $\sum_{n=1}^\infty a_n$ o wyrazach w $\mathbb{R}$ lub $\mathbb{C}$ jest zbieżny wtedy i tylko wtedy, gdy
+\[
+\forall_{\varepsilon > 0} \; \exists_{N \in \mathbb{N}} \; \forall_{m \geqslant n \geqslant N} \quad \left\lvert \sum_{k=n}^{m} a_k \right\rvert < \varepsilon.
+\]
+\end{twierdzenie}
+
+\begin{definicja}[Iloczyn Cauchy'ego szeregów]
+Iloczynem Cauchy'ego szeregów $\sum_{n=0}^\infty a_n$ i $\sum_{n=0}^\infty b_n$ nazywamy szereg $\sum_{n=0}^\infty c_n$, gdzie $c_n = \sum_{k=0}^n a_k b_{n-k}$.
+\end{definicja}
+
+\begin{twierdzenie}[Mertensa]
+Jeżeli szereg $\sum_{n=0}^\infty a_n = A$ jest zbieżny bezwzględnie, a szereg $\sum_{n=0}^\infty b_n = B$ jest zbieżny, to ich iloczyn Cauchy'ego $\sum_{n=0}^\infty c_n$ jest zbieżny do $A \cdot B$. (Gdy oba szeregi zbiegają jedynie warunkowo, iloczyn Cauchy'ego może być rozbieżny, np. dla $a_n = b_n = \frac{(-1)^n}{\sqrt{n+1}}$).
+\end{twierdzenie}
+
+\subsection{Zbieżność bezwzględna a zbieżność warunkowa}
+
+\begin{definicja}
+Szereg $\sum_{n=1}^\infty a_n$ nazywamy \emph{zbieżnym bezwzględnie}, jeżeli zbieżny jest szereg $\sum_{n=1}^\infty \lvert a_n \rvert < +\infty$. Szereg zbieżny, który nie jest zbieżny bezwzględnie, nazywamy \emph{zbieżnym warunkowo} (np. $\sum_{n=1}^\infty \frac{(-1)^{n-1}}{n} = \ln 2$).
+\end{definicja}
+
+\begin{twierdzenie}
+Każdy szereg zbieżny bezwzględnie jest zbieżny (wynika z nierówności $\bigl\lvert \sum_{k=n}^m a_k \bigr\rvert \leqslant \sum_{k=n}^m \lvert a_k \rvert$ i warunku Cauchy'ego).
+\end{twierdzenie}
+
+\begin{twierdzenie}[O przestawianiu wyrazów -- Dirichleta oraz Riemanna]
+\begin{enumerate}
+    \item Jeżeli szereg $\sum_{n=1}^\infty a_n$ jest zbieżny bezwzględnie do $S$, to dla dowolnej bijekcji $\sigma \colon \mathbb{N} \to \mathbb{N}$ szereg $\sum_{n=1}^\infty a_{\sigma(n)}$ również zbiega bezwzględnie do $S$.
+    \item \emph{(Twierdzenie Riemanna)} Jeżeli szereg rzeczywisty $\sum_{n=1}^\infty a_n$ jest zbieżny warunkowo, to dla dowolnego $S \in \overline{\mathbb{R}}$ istnieje bijekcja $\sigma \colon \mathbb{N} \to \mathbb{N}$ taka, że $\sum_{n=1}^\infty a_{\sigma(n)} = S$.
+\end{enumerate}
+\end{twierdzenie}
+
+\begin{uwaga}[Łączność w szeregach]
+W dowolnym szeregu zbieżnym grupowanie sąsiednich wyrazów w nawiasy nie zmienia zbieżności ani sumy szeregu (ciąg sum częściowych nowego szeregu jest podciągiem wyjściowego). Opuszczanie nawiasów jest dopuszczalne m.in. wtedy, gdy wyraz ogólny szeregu przed grupowaniem dąży do $0$, a liczba wyrazów w każdym nawiasie jest wspólnie ograniczona.
+\end{uwaga}
+
+\subsection{Szeregi wzorcowe i kryteria dla wyrazów nieujemnych}
+
+\noindent\textbf{Szeregi wzorcowe:}
+\begin{itemize}
+    \item \emph{Szereg geometryczny:} $\sum_{n=0}^\infty q^n$ zbiega bezwzględnie $\iff \lvert q \rvert < 1$ (suma wynosi $\frac{1}{1-q}$).
+    \item \emph{Szereg harmoniczny rzędu $\alpha$:} $\sum_{n=1}^\infty \frac{1}{n^\alpha}$ jest zbieżny $\iff \alpha > 1$.
+    \item \emph{Szereg Bertranda:} $\sum_{n=2}^\infty \frac{1}{n \ln^\alpha n}$ jest zbieżny $\iff \alpha > 1$.
+\end{itemize}
+
+\begin{kryterium}[Porównawcze]
+Jeżeli $0 \leqslant a_n \leqslant b_n$ od pewnego miejsca, to zbieżność $\sum b_n$ implikuje zbieżność $\sum a_n$, a rozbieżność $\sum a_n$ implikuje rozbieżność $\sum b_n$.
+\end{kryterium}
+
+\begin{kryterium}[Ilorazowe]
+Niech $a_n \geqslant 0$, $b_n > 0$ oraz $\lim_{n\to\infty} \frac{a_n}{b_n} = K \in [0, +\infty]$.
+\begin{itemize}
+    \item Jeżeli $0 < K < +\infty$, to szeregi $\sum a_n$ i $\sum b_n$ są jednocześnie zbieżne albo jednocześnie rozbieżne.
+    \item Jeżeli $K = 0$ oraz $\sum b_n < \infty$, to $\sum a_n < \infty$.
+    \item Jeżeli $K = +\infty$ oraz $\sum b_n = +\infty$, to $\sum a_n = +\infty$.
+\end{itemize}
+\end{kryterium}
+
+\begin{kryterium}[Cauchy'ego]
+Niech $q = \limsup_{n\to\infty} \sqrt[n]{\lvert a_n \rvert}$. Jeśli $q < 1$, szereg $\sum a_n$ jest zbieżny bezwzględnie; jeśli $q > 1$, szereg jest rozbieżny; dla $q = 1$ kryterium nie rozstrzyga.
+\end{kryterium}
+
+\begin{kryterium}[d'Alemberta]
+Niech $a_n \neq 0$ od pewnego miejsca. Jeśli $\limsup_{n\to\infty} \left\lvert \frac{a_{n+1}}{a_n} \right\rvert < 1$, szereg zbiega bezwzględnie. Jeśli $\liminf_{n\to\infty} \left\lvert \frac{a_{n+1}}{a_n} \right\rvert > 1$ (lub od pewnego miejsca $\left\lvert \frac{a_{n+1}}{a_n} \right\rvert \geqslant 1$), szereg jest rozbieżny.
+\end{kryterium}
+
+\begin{uwaga}
+Kryterium Cauchy'ego jest silniejsze od kryterium d'Alemberta: z nierówności $\liminf \left\lvert \frac{a_{n+1}}{a_n} \right\rvert \leqslant \liminf \sqrt[n]{\lvert a_n \rvert} \leqslant \limsup \sqrt[n]{\lvert a_n \rvert} \leqslant \limsup \left\lvert \frac{a_{n+1}}{a_n} \right\rvert$ wynika, że gdy rozstrzyga kryterium d'Alemberta, rozstrzyga również kryterium Cauchy'ego. Przykładem odwrotnym jest szereg o wyrazach $a_{2k} = 2^{-k}$, $a_{2k+1} = 2^{-k}$, dla którego $\sqrt[n]{a_n} \to \frac{1}{\sqrt{2}} < 1$, natomiast iloraz $\frac{a_{n+1}}{a_n}$ przyjmuje na przemian wartości $1$ oraz $\frac{1}{2}$.
+\end{uwaga}
+
+\begin{kryterium}[Zagęszczające Cauchy'ego]
+Jeżeli $(a_n)$ jest nierosnącym ciągiem liczb nieujemnych, to
+\[
+\sum_{n=1}^{\infty} a_n < +\infty \iff \sum_{k=0}^{\infty} 2^k a_{2^k} < +\infty.
+\]
+\end{kryterium}
+
+\begin{kryterium}[Całkowe]
+Jeżeli $f \colon [1, +\infty) \to [0, +\infty)$ jest funkcją ciągłą i nierosnącą, to
+\[
+\sum_{n=1}^{\infty} f(n) < +\infty \iff \int_{1}^{+\infty} f(x)\,dx < +\infty.
+\]
+\end{kryterium}
+
+\begin{kryterium}[Raabego]
+Niech $a_n > 0$ i istnieje $\lim_{n\to\infty} n\left(\frac{a_n}{a_{n+1}} - 1\right) = r$. Wtedy dla $r > 1$ szereg $\sum a_n$ jest zbieżny, a dla $r < 1$ jest rozbieżny.
+\end{kryterium}
+
+\subsection{Kryteria zbieżności dla szeregów o wyrazach dowolnych}
+
+\begin{kryterium}[Leibniza]
+Jeżeli ciąg $(b_n)$ jest od pewnego miejsca nierosnący, nieujemny oraz $\lim_{n\to\infty} b_n = 0$, to szereg naprzemienny $\sum_{n=1}^\infty (-1)^n b_n$ jest zbieżny, a jego reszta spełnia oszacowanie $\left\lvert \sum_{k=n+1}^\infty (-1)^k b_k \right\rvert \leqslant b_{n+1}$.
+\end{kryterium}
+
+\begin{uwaga}
+Założenie monotoniczności ciągu $(b_n)$ jest istotne. Dla ciągu zadanego wzorami $b_{2k-1} = \frac{1}{k}$ oraz $b_{2k} = \frac{1}{k^2}$ zachodzi $b_n > 0$ i $b_n \to 0$, ale szereg $\sum_{n=1}^\infty (-1)^{n-1} b_n = \sum_{k=1}^\infty \left(\frac{1}{k} - \frac{1}{k^2}\right)$ jest rozbieżny do $+\infty$.
+\end{uwaga}
+
+\begin{kryterium}[Dirichleta]
+Szereg $\sum_{n=1}^\infty a_n b_n$ jest zbieżny, jeżeli:
+\begin{enumerate}
+    \item ciąg sum częściowych $A_N = \sum_{n=1}^N a_n$ jest ograniczony ($\exists_{M > 0} \; \forall_N \; \lvert A_N \rvert \leqslant M$),
+    \item ciąg $(b_n)$ jest od pewnego miejsca monotoniczny oraz $\lim_{n\to\infty} b_n = 0$.
+\end{enumerate}
+\end{kryterium}
+
+\begin{kryterium}[Abela]
+Szereg $\sum_{n=1}^\infty a_n b_n$ jest zbieżny, jeżeli:
+\begin{enumerate}
+    \item szereg $\sum_{n=1}^\infty a_n$ jest zbieżny,
+    \item ciąg $(b_n)$ jest monotoniczny i ograniczony.
+\end{enumerate}
+\end{kryterium}
+
+\subsection{Wybrane metody badania zbieżności i przykłady}
+
+\begin{przyklad}[Rozwinięcie wyrazu ogólnego we wzór Taylora]
+Zbadajmy zbieżność szeregu $\sum_{n=2}^\infty \ln\left(1 + \frac{(-1)^n}{\sqrt{n}}\right)$. Kryterium Leibniza nie stosuje się bezpośrednio, ponieważ ciąg modułów wyrazów nie jest monotoniczny (funkcja $x \mapsto \ln(1+x)$ jest wklęsła, więc $\lvert \ln(1 - \frac{1}{\sqrt{n}}) \rvert > \ln(1 + \frac{1}{\sqrt{n}})$). Korzystamy ze wzoru Taylora $\ln(1 + x) = x - \frac{x^2}{2} + O(x^3)$ przy $x \to 0$:
+\[
+\ln\left(1 + \frac{(-1)^n}{\sqrt{n}}\right) = \frac{(-1)^n}{\sqrt{n}} - \frac{1}{2n} + r_n, \qquad \lvert r_n \rvert \leqslant \frac{C}{n^{3/2}}.
+\]
+Szereg $\sum \frac{(-1)^n}{\sqrt{n}}$ jest zbieżny na mocy kryterium Leibniza, szereg $\sum r_n$ jest zbieżny bezwzględnie z kryterium porównawczego, natomiast szereg $\sum \left(-\frac{1}{2n}\right)$ jest rozbieżny. Jako suma szeregu zbieżnego i rozbieżnego, badany szereg jest rozbieżny.
+\end{przyklad}
+
+\begin{przyklad}[Zastosowanie kryterium Dirichleta do szeregów trygonometrycznych]
+Dla $x \neq 2k\pi$ ($k \in \mathbb{Z}$) oraz $\alpha > 0$ szeregi $\sum_{n=1}^\infty \frac{\sin(nx)}{n^\alpha}$ i $\sum_{n=1}^\infty \frac{\cos(nx)}{n^\alpha}$ są zbieżne, ponieważ ciąg $\left(\frac{1}{n^\alpha}\right)$ jest malejący do $0$, a sumy częściowe spełniają oszacowania
+\[
+\left\lvert \sum_{n=1}^N \sin(nx) \right\rvert = \left\lvert \frac{\sin\frac{Nx}{2}\sin\frac{(N+1)x}{2}}{\sin\frac{x}{2}} \right\rvert \leqslant \frac{1}{\lvert \sin(x/2) \rvert}, \qquad \left\lvert \sum_{n=1}^N \cos(nx) \right\rvert \leqslant \frac{1}{\lvert \sin(x/2) \rvert}.
+\]
+Dla $\alpha > 1$ zbieżność jest bezwzględna, natomiast dla $0 < \alpha \leqslant 1$ jest to zbieżność warunkowa.
+\end{przyklad}
+
+\begin{uwaga}[Wybrane zależności między szeregami]
+\begin{itemize}
+    \item \emph{Dowodzenie granicy $\lim_{n\to\infty} a_n = 0$ przez szeregi:} jeżeli szereg $\sum_{n=1}^\infty a_n$ jest zbieżny (np. z kryterium d'Alemberta lub Cauchy'ego), to z warunku koniecznego wynika $\lim_{n\to\infty} a_n = 0$.
+    \item \emph{Związek między $\sum a_n$ a $\sum a_n^2$:} dla $a_n \geqslant 0$ ze zbieżności $\sum a_n$ wynika zbieżność $\sum a_n^2$ (od pewnego miejsca $0 \leqslant a_n < 1$, skąd $a_n^2 \leqslant a_n$). Przy wyrazach dowolnego znaku nie jest to prawda (np. $a_n = \frac{(-1)^n}{\sqrt{n}}$). Zawsze jednak ze zbieżności $\sum a_n^2$ wynika bezwzględna zbieżność szeregu $\sum \frac{a_n}{n}$, co wynika z nierówności $\frac{\lvert a_n \rvert}{n} \leqslant \frac{1}{2}\left(a_n^2 + \frac{1}{n^2}\right)$.
+\end{itemize}
+\end{uwaga}
+
+\end{document}
