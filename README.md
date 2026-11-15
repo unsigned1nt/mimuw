@@ -18,3 +18,10 @@ Notatki dotyczą tematów wziętych wprost z sylabusa, które miały niezerowe p
 
 #### [Analiza matematyczna: kolokwium 1 przydatne fakty](./rok_1/am/kolokwium_1_fakty.pdf)
 Na bazie pliku z douczek autorstwa Piotra Nayara z samymi faktami. Tutaj fakty zostały podzielone na sekcje oraz opatrzone nazwami i wyjaśnieniami.
+
+#### [Podstawy matematyki: notatki](./rok_1/pmat/notatki.pdf)
+Tematy z sylabusa:
+- (3) Relacje i funkcje oraz ich podstawowe własności.
+- (4) Relacja równoważności, zasada abstrakcji.
+- (6) Równoliczność. Zbiory skończone i nieskończone, przeliczalne i nieprzeliczalne.
+- (7) Twierdzenie Cantora i twierdzenie Cantora-Bernsteina.

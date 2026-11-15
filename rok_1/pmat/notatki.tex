@@ -1,0 +1,481 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[a4paper]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\setlist[itemize]{label=-}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage[colorlinks=true, linkcolor=accent, urlcolor=accent]{hyperref}
+
+\definecolor{accent}{HTML}{1E3A8A}
+\definecolor{subtle}{HTML}{475569}
+
+\theoremstyle{definition}
+\newtheorem{definicja}{Definicja}[section]
+\newtheorem{przyklad}[definicja]{Przykład}
+
+\theoremstyle{plain}
+\newtheorem{twierdzenie}[definicja]{Twierdzenie}
+\newtheorem{wniosek}[definicja]{Wniosek}
+\newtheorem{fakt}[definicja]{Fakt}
+
+\theoremstyle{remark}
+\newtheorem*{uwaga}{Uwaga}
+
+\title{\textbf{Podstawy matematyki} -- notatki z wybranych tematów}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Relacje i funkcje oraz ich podstawowe własności}
+
+\subsection{Relacje dwuargumentowe i działania na relacjach}
+
+\begin{definicja}
+\textbf{Relacją dwuargumentową} między zbiorami $X$ i $Y$ nazywamy dowolny podzbiór iloczynu kartezjańskiego $R \subseteq X \times Y$. Zamiast $(x, y) \in R$ piszemy często $x R y$. Gdy $X = Y$, mówimy o relacji w zbiorze $X$.
+\begin{itemize}
+    \item \textbf{Dziedziną} relacji $R$ jest zbiór $\mathrm{dom}(R) = \{x \in X : \exists_{y \in Y}\, (x, y) \in R\}$.
+    \item \textbf{Przeciwdziedziną (obrazem)} relacji $R$ jest zbiór $\mathrm{rng}(R) = \{y \in Y : \exists_{x \in X}\, (x, y) \in R\}$.
+    \item \textbf{Relacją odwrotną} do $R \subseteq X \times Y$ nazywamy relację $R^{-1} = \{(y, x) \in Y \times X : (x, y) \in R\}$.
+    \item \textbf{Złożeniem} relacji $R \subseteq X \times Y$ oraz $S \subseteq Y \times Z$ nazywamy relację:
+    \[
+        S \circ R = \{(x, z) \in X \times Z : \exists_{y \in Y}\, ((x, y) \in R \land (y, z) \in S)\}.
+    \]
+\end{itemize}
+\end{definicja}
+
+\begin{fakt}[Podstawowe własności działań na relacjach]
+Dla dowolnych relacji $R, S, T$ o odpowiednich dziedzinach zachodzi:
+\begin{itemize}
+    \item $(R^{-1})^{-1} = R$ oraz $(S \circ R)^{-1} = R^{-1} \circ S^{-1}$ (odwracanie zmienia kolejność składania),
+    \item $T \circ (S \circ R) = (T \circ S) \circ R$ (łączność składania relacji),
+    \item $R \circ \mathrm{id}_X = R$ oraz $\mathrm{id}_Y \circ R = R$, gdzie $\mathrm{id}_X = \{(x, x) : x \in X\}$ jest relacją identycznościową.
+\end{itemize}
+\end{fakt}
+
+\subsection{Własności relacji w zbiorze}
+
+Niech $R \subseteq X \times X$. W zadaniach dowodowych bardzo przydaje się zarówno definicja kwantyfikatorowa, jak i jej równoważny zapis algebraiczny (za pomocą $\mathrm{id}_X$, złożenia i relacji odwrotnej):
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{l X l}
+\toprule
+\textbf{Własność} & \textbf{Warunek logiczny} & \textbf{Postać algebraiczna} \\
+\midrule
+Zwrotność & $\forall_{x \in X}\, x R x$ & $\mathrm{id}_X \subseteq R$ \\
+Przeciwzwrotność & $\forall_{x \in X}\, \neg(x R x)$ & $R \cap \mathrm{id}_X = \emptyset$ \\
+Symetria & $\forall_{x, y \in X}\, (x R y \Rightarrow y R x)$ & $R = R^{-1}$ \\
+Słaba antysymetria & $\forall_{x, y \in X}\, (x R y \land y R x \Rightarrow x = y)$ & $R \cap R^{-1} \subseteq \mathrm{id}_X$ \\
+Przeciwsymetria & $\forall_{x, y \in X}\, (x R y \Rightarrow \neg(y R x))$ & $R \cap R^{-1} = \emptyset$ \\
+Przechodniość & $\forall_{x, y, z \in X}\, (x R y \land y R z \Rightarrow x R z)$ & $R \circ R \subseteq R$ \\
+Spójność & $\forall_{x, y \in X}\, (x \neq y \Rightarrow x R y \lor y R x)$ & $R \cup R^{-1} \cup \mathrm{id}_X = X^2$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{uwaga}
+Relacja jest jednocześnie symetryczna i słabo antysymetryczna wtedy i tylko wtedy, gdy $R \subseteq \mathrm{id}_X$. Z kolei relacja przeciwsymetryczna jest zawsze przeciwzwrotna (wystarczy podstawić $y = x$).
+\end{uwaga}
+
+\subsection{Funkcje, obrazy i przeciwobrazy}
+
+\begin{definicja}
+Relację $f \subseteq X \times Y$ nazywamy \textbf{funkcją} (odwzorowaniem) z $X$ w $Y$, co zapisujemy $f : X \to Y$, jeśli dla każdego $x \in X$ istnieje dokładnie jeden $y \in Y$ taki, że $(x, y) \in f$. Zbiór wszystkich funkcji z $X$ w $Y$ oznaczamy przez $Y^X$.
+\begin{itemize}
+    \item \textbf{Obrazem} zbioru $A \subseteq X$ przez funkcję $f$ jest zbiór $f[A] = \{f(x) : x \in A\} \subseteq Y$.
+    \item \textbf{Przeciwobrazem} zbioru $B \subseteq Y$ przez funkcję $f$ jest zbiór $f^{-1}[B] = \{x \in X : f(x) \in B\} \subseteq X$.
+\end{itemize}
+\end{definicja}
+
+\begin{uwaga}
+Przeciwobraz $f^{-1}[B]$ jest określony dla \emph{każdej} funkcji $f : X \to Y$, niezależnie od tego, czy istnieje funkcja odwrotna $f^{-1}$.
+\end{uwaga}
+
+\begin{twierdzenie}[Działania na obrazach i przeciwobrazach]
+Niech $f : X \to Y$, $\{A_i\}_{i \in I}$ będzie rodziną podzbiorów $X$, a $\{B_i\}_{i \in I}$ rodziną podzbiorów $Y$ ($I \neq \emptyset$). Wówczas:
+\begin{enumerate}
+    \item Przeciwobraz zachowuje \textbf{wszystkie} działania mnogościowe:
+    \[
+        f^{-1}\!\left[\bigcup_{i \in I} B_i\right] = \bigcup_{i \in I} f^{-1}[B_i], \qquad
+        f^{-1}\!\left[\bigcap_{i \in I} B_i\right] = \bigcap_{i \in I} f^{-1}[B_i], \qquad
+        f^{-1}[Y \setminus B] = X \setminus f^{-1}[B].
+    \]
+    \item Obraz zachowuje sumy, ale dla przekrojów i różnic zachodzą w ogólności jedynie inkluzje:
+    \[
+        f\!\left[\bigcup_{i \in I} A_i\right] = \bigcup_{i \in I} f[A_i], \qquad
+        f\!\left[\bigcap_{i \in I} A_i\right] \subseteq \bigcap_{i \in I} f[A_i], \qquad
+        f[A_1] \setminus f[A_2] \subseteq f[A_1 \setminus A_2].
+    \]
+    \item Dla dowolnych $A \subseteq X$ oraz $B \subseteq Y$ zachodzi: $A \subseteq f^{-1}[f[A]]$ oraz $f[f^{-1}[B]] \subseteq B$.
+\end{enumerate}
+\end{twierdzenie}
+
+\subsection{Iniekcje, surjekcje, bijekcje i istnienie odwrotności}
+
+\begin{definicja}
+Niech $f : X \to Y$. Mówimy, że $f$ jest:
+\begin{itemize}
+    \item \textbf{iniekcją} (funkcją różnowartościową, zapis: $f : X \hookrightarrow Y$), gdy $\forall_{x_1, x_2 \in X}\, (f(x_1) = f(x_2) \Rightarrow x_1 = x_2)$,
+    \item \textbf{surjekcją} (funkcją „na”, zapis: $f : X \twoheadrightarrow Y$), gdy $f[X] = Y$, czyli $\forall_{y \in Y}\, \exists_{x \in X}\, f(x) = y$,
+    \item \textbf{bijekcją} (odwzorowaniem wzajemnie jednoznacznym), gdy $f$ jest jednocześnie iniekcją i surjekcją.
+\end{itemize}
+\end{definicja}
+
+\begin{twierdzenie}[Charakteryzacje iniekcji, surjekcji i bijekcji]\label{tw:odwrotnosci}
+Niech $X \neq \emptyset$ oraz $f : X \to Y$.
+\begin{enumerate}
+    \item $f$ jest iniekcją $\iff$ istnieje lewa odwrotność $g : Y \to X$ taka, że $g \circ f = \mathrm{id}_X$ $\iff$ dla każdego $A \subseteq X$ zachodzi $f^{-1}[f[A]] = A$ $\iff$ dla każdych $A_1, A_2 \subseteq X$ zachodzi $f[A_1 \cap A_2] = f[A_1] \cap f[A_2]$.
+    \item $f$ jest surjekcją $\iff$ (przy aksjomacie wyboru) istnieje prawa odwrotność $h : Y \to X$ taka, że $f \circ h = \mathrm{id}_Y$ $\iff$ dla każdego $B \subseteq Y$ zachodzi $f[f^{-1}[B]] = B$.
+    \item $f$ jest bijekcją $\iff$ istnieje funkcja odwrotna $f^{-1} : Y \to X$ taka, że $f^{-1} \circ f = \mathrm{id}_X$ oraz $f \circ f^{-1} = \mathrm{id}_Y$.
+\end{enumerate}
+\end{twierdzenie}
+
+\begin{wniosek}[Kluczowy wniosek do zadań z teorii mocy]\label{wn:surjekcja-iniekcja}
+Jeśli istnieje surjekcja $f : X \twoheadrightarrow Y$, to jej prawa odwrotność $h : Y \to X$ (spełniająca $f \circ h = \mathrm{id}_Y$) jest automatycznie \textbf{iniekcją}. Oznacza to, że aby udowodnić nierówność mocy $|Y| \le |X|$, wystarczy wskazać surjekcję z $X$ na $Y$ — co w wielu zadaniach jest znacznie prostsze niż konstrukcja iniekcji z $Y$ w $X$.
+\end{wniosek}
+
+\begin{fakt}[Własności składania funkcji]
+Dla dowolnych funkcji $f : X \to Y$ oraz $g : Y \to Z$:
+\begin{itemize}
+    \item Jeśli $f$ i $g$ są iniekcjami (surjekcjami, bijekcjami), to $g \circ f$ jest iniekcją (surjekcją, bijekcją).
+    \item Jeśli $g \circ f$ jest iniekcją, to $f$ jest iniekcją (ale $g$ nie musi być iniekcją).
+    \item Jeśli $g \circ f$ jest surjekcją, to $g$ jest surjekcją (ale $f$ nie musi być surjekcją).
+\end{itemize}
+\end{fakt}
+
+% ==============================================================================
+\section{Relacja równoważności, zasada abstrakcji}
+
+\subsection{Relacja równoważności i klasy abstrakcji}
+
+\begin{definicja}
+Relację $R \subseteq X \times X$ nazywamy \textbf{relacją równoważności} w zbiorze $X$, jeśli jest jednocześnie zwrotna, symetryczna i przechodnia.
+\begin{itemize}
+    \item \textbf{Klasą abstrakcji} elementu $x \in X$ względem relacji $R$ nazywamy zbiór $[x]_R = \{y \in X : x R y\}$.
+    \item \textbf{Zbiorem ilorazowym} (przestrzenią ilorazową) nazywamy rodzinę wszystkich klas abstrakcji:
+    \[
+        X / R = \{[x]_R : x \in X\} \subseteq \mathcal{P}(X).
+    \]
+\end{itemize}
+\end{definicja}
+
+\begin{twierdzenie}[Podstawowe własności klas abstrakcji]
+Niech $R$ będzie relacją równoważności w zbiorze $X$. Dla dowolnych $x, y \in X$ zachodzi:
+\begin{enumerate}
+    \item $x \in [x]_R$ (każda klasa abstrakcji jest niepusta),
+    \item $x R y \iff [x]_R = [y]_R$ (elementy równoważne wyznaczają tę samą klasę),
+    \item $\neg(x R y) \iff [x]_R \cap [y]_R = \emptyset$ (dwie klasy są albo identyczne, albo rozłączne),
+    \item $\bigcup (X / R) = \bigcup_{x \in X} [x]_R = X$.
+\end{enumerate}
+\end{twierdzenie}
+
+\subsection{Rozbicie zbioru i zasada abstrakcji}
+
+\begin{definicja}
+Rodzinę zbiorów $\mathcal{A} \subseteq \mathcal{P}(X)$ nazywamy \textbf{rozbiciem} (lub \textbf{podziałem}) zbioru $X$, jeśli spełnione są trzy warunki:
+\begin{enumerate}
+    \item $\emptyset \notin \mathcal{A}$ (składniki rozbicia są niepuste),
+    \item $\forall_{A, B \in \mathcal{A}}\, (A \neq B \Rightarrow A \cap B = \emptyset)$ (różne składniki są parami rozłączne),
+    \item $\bigcup \mathcal{A} = X$ (suma wszystkich składników daje cały zbiór $X$).
+\end{enumerate}
+\end{definicja}
+
+\begin{twierdzenie}[Zasada abstrakcji]
+Istnieje wzajemnie jednoznaczna odpowiedniość między relacjami równoważności na zbiorze $X$ a rozbiciami zbioru $X$:
+\begin{itemize}
+    \item Jeśli $R$ jest relacją równoważności na $X$, to zbiór ilorazowy $X / R$ jest rozbiciem zbioru $X$.
+    \item Odwrotnie, jeśli $\mathcal{A}$ jest rozbiciem zbioru $X$, to relacja $R_{\mathcal{A}}$ zdefiniowana warunkiem
+    \[
+        x R_{\mathcal{A}} y \iff \exists_{A \in \mathcal{A}}\, (x \in A \land y \in A)
+    \]
+    jest relacją równoważności na $X$, przy czym $X / R_{\mathcal{A}} = \mathcal{A}$.
+\end{itemize}
+\end{twierdzenie}
+
+\subsection{Kanoniczny rozkład funkcji i istotne wnioski zadaniowe}
+
+\begin{definicja}[Jądro funkcji]
+Dla dowolnej funkcji $f : X \to Y$ relacja $x \sim_f y \iff f(x) = f(y)$ jest relacją równoważności w $X$, nazywaną \textbf{jądrem funkcji} $f$. Jej klasami abstrakcji są niepuste włókna funkcji: $[x]_{\sim_f} = f^{-1}[\{f(x)\}]$.
+\end{definicja}
+
+\begin{twierdzenie}[O kanonicznym rozkładzie funkcji]
+Każda funkcja $f : X \to Y$ przedstawia się jako złożenie $f = \iota \circ \tilde{f} \circ \pi$, gdzie:
+\begin{itemize}
+    \item $\pi : X \twoheadrightarrow X / {\sim_f}$, dana wzorem $\pi(x) = [x]_{\sim_f}$, jest kanoniczną surjekcją,
+    \item $\tilde{f} : X / {\sim_f} \to f[X]$, dana wzorem $\tilde{f}([x]_{\sim_f}) = f(x)$, jest dobrze określoną \textbf{bijekcją},
+    \item $\iota : f[X] \hookrightarrow Y$, dana wzorem $\iota(y) = y$, jest kanonicznym zanurzeniem (iniekcją).
+\end{itemize}
+\end{twierdzenie}
+
+\begin{wniosek}[Narzędzia do wyznaczania mocy zbiorów ilorazowych]
+Z powyższych twierdzeń wynikają trzy niezwykle użyteczne reguły stosowane w zadaniach:
+\begin{enumerate}
+    \item \textbf{Oszacowanie z góry:} Ponieważ rzutowanie kanoniczne $\pi : X \twoheadrightarrow X / R$ jest surjekcją, zawsze zachodzi $|X / R| \le |X|$. W szczególności każdy zbiór ilorazowy zbioru przeliczalnego jest co najwyżej przeliczalny.
+    \item \textbf{Metoda niezmiennika zupełnego:} Aby wyznaczyć moc zbioru ilorazowego $X / R$, warto wskazać funkcję $f : X \to Y$ taką, że $x R y \iff f(x) = f(y)$ (tzw. niezmiennik zupełny). Wówczas ${\sim_f} = R$, więc $\tilde{f}$ jest bijekcją między $X / R$ a obrazem $f[X]$, skąd $|X / R| = |f[X]|$ bez konieczności wybierania reprezentantów klas.
+    \item \textbf{Poprawność definicji na klasach:} Definiując odwzorowanie $\Phi : X / R \to Z$ wzorem $\Phi([x]_R) = g(x)$, należy zawsze sprawdzić niezależność od reprezentanta: $x R y \Rightarrow g(x) = g(y)$.
+\end{enumerate}
+\end{wniosek}
+
+\begin{przyklad}
+Niech na zbiorze $\mathbb{R}^{\mathbb{N}}$ wszystkich ciągów liczb rzeczywistych dana będzie relacja $(a_n) \sim (b_n) \iff \exists_{N \in \mathbb{N}}\, \forall_{n \ge N}\, a_n = b_n$ (ciągi równe od pewnego miejsca). Każda klasa abstrakcji $[(a_n)]_{\sim}$ jest przeliczalna (różni się od $(a_n)$ na skończenie wielu indeksach). Ile jest klas abstrakcji? Zauważmy, że $|\mathbb{R}^{\mathbb{N}}| = \mathfrak{c}$, więc $|\mathbb{R}^{\mathbb{N}} / {\sim}| \le \mathfrak{c}$. Z drugiej strony ciągi stałe $c^{(r)} = (r, r, r, \dots)$ dla różnych $r \in \mathbb{R}$ leżą w różnych klasach abstrakcji, co daje iniekcję $\mathbb{R} \hookrightarrow \mathbb{R}^{\mathbb{N}} / {\sim}$. Zatem $|\mathbb{R}^{\mathbb{N}} / {\sim}| = \mathfrak{c}$.
+\end{przyklad}
+
+% ==============================================================================
+\section{Równoliczność. Zbiory skończone i nieskończone, przeliczalne i nieprzeliczalne}
+
+\subsection{Równoliczność i porządek na mocach}
+
+\begin{definicja}
+Mówimy, że zbiory $A$ i $B$ są \textbf{równoliczne} (mają tę samą moc, zapis: $A \sim B$ lub $|A| = |B|$), jeśli istnieje bijekcja $f : A \to B$.
+\begin{itemize}
+    \item Mówimy, że moc zbioru $A$ jest \textbf{nie większa} niż moc zbioru $B$ ($|A| \le |B|$ lub $A \preceq B$), gdy istnieje iniekcja $f : A \hookrightarrow B$ (równoważnie: $A$ jest równoliczny z pewnym podzbiorem zbioru $B$).
+    \item Mówimy, że moc zbioru $A$ jest \textbf{ostro mniejsza} niż moc zbioru $B$ ($|A| < |B|$ lub $A \prec B$), gdy $|A| \le |B|$ oraz $A \nsim B$ (czyli istnieje iniekcja $A \hookrightarrow B$, ale nie istnieje żadna bijekcja między $A$ i $B$).
+\end{itemize}
+\end{definicja}
+
+\begin{fakt}
+Relacja równoliczności $\sim$ jest zwrotna ($A \sim A$ przez $\mathrm{id}_A$), symetryczna ($A \sim B \Rightarrow B \sim A$ przez $f^{-1}$) oraz przechodnia ($A \sim B \land B \sim C \Rightarrow A \sim C$ przez $g \circ f$).
+\end{fakt}
+
+\subsection{Zbiory skończone i nieskończone}
+
+\begin{definicja}
+Zbiór $A$ nazywamy \textbf{skończonym}, jeśli $A = \emptyset$ lub istnieje liczba naturalna $n \ge 1$ taka, że $A \sim \{1, 2, \dots, n\}$ (wówczas piszemy $|A| = n$, a dla zbioru pustego $|\emptyset| = 0$). Zbiór, który nie jest skończony, nazywamy \textbf{nieskończonym}.
+\end{definicja}
+
+\begin{twierdzenie}[Charakteryzacja Dedekinda zbiorów nieskończonych]
+Przy założeniu aksjomatu wyboru następujące warunki są równoważne:
+\begin{enumerate}
+    \item Zbiór $A$ jest nieskończony.
+    \item Zbiór $A$ jest \textbf{nieskończony w sensie Dedekinda}, tzn. istnieje jego podzbiór właściwy $B \subsetneq A$ taki, że $A \sim B$.
+    \item Zbiór $A$ zawiera podzbiór przeliczalny nieskończony, czyli $\aleph_0 \le |A|$ (moc $\aleph_0$ jest najmniejszą mocą nieskończoną).
+\end{enumerate}
+\end{twierdzenie}
+
+\begin{wniosek}[Zasada absorpcji — dodawanie i usuwanie elementów]\label{wn:absorpcja}
+Niech $A$ będzie dowolnym zbiorem nieskończonym.
+\begin{enumerate}
+    \item Jeśli $B$ jest zbiorem skończonym (lub ogólniej $|B| \le |A|$), to $|A \cup B| = |A|$.
+    \item Jeśli $B \subseteq A$ jest zbiorem skończonym (lub ogólniej $|B| < |A|$ przy aksjomacie wyboru), to $|A \setminus B| = |A|$.
+\end{enumerate}
+\textbf{Zastosowanie:} Usunięcie przeliczalnie wielu punktów ze zbioru mocy continuum $\mathfrak{c}$ nie zmienia jego mocy. Przykładowo, zbiór liczb niewymiernych $\mathbb{R} \setminus \mathbb{Q}$ oraz zbiór liczb przestępnych $\mathbb{R} \setminus \overline{\mathbb{Q}}$ mają moc $\mathfrak{c}$.
+\end{wniosek}
+
+\subsection{Zbiory przeliczalne i nieprzeliczalne}
+
+\begin{definicja}
+Niech $\aleph_0 = |\mathbb{N}|$ oznacza moc zbioru liczb naturalnych (czyt. \emph{alef zero}).
+\begin{itemize}
+    \item Zbiór $A$ nazywamy \textbf{przeliczalnym nieskończonym} (lub krótko: mocy $\aleph_0$), jeśli $A \sim \mathbb{N}$ (tzn. jego elementy można ustawić w ciąg różnowartościowy $a_0, a_1, a_2, \dots$).
+    \item Zbiór $A$ nazywamy \textbf{co najwyżej przeliczalnym} ($|A| \le \aleph_0$), jeśli jest skończony lub mocy $\aleph_0$.
+    \item Zbiór $A$ nazywamy \textbf{nieprzeliczalnym}, jeśli nie jest co najwyżej przeliczalny ($|A| > \aleph_0$).
+\end{itemize}
+\end{definicja}
+
+\begin{twierdzenie}[Podstawowe własności zbiorów przeliczalnych]\label{tw:przeliczalne}
+Zachodzą następujące fakty:
+\begin{enumerate}
+    \item Każdy podzbiór zbioru co najwyżej przeliczalnego jest co najwyżej przeliczalny. Każdy nieskończony podzbiór zbioru przeliczalnego ma moc $\aleph_0$.
+    \item Obraz zbioru co najwyżej przeliczalnego przez dowolną funkcję jest co najwyżej przeliczalny ($|f[A]| \le |A|$).
+    \item \textbf{Iloczyn kartezjański:} Jeśli $|A| = \aleph_0$ oraz $|B| = \aleph_0$, to $|A \times B| = \aleph_0$. Przez indukcję, dla każdego $k \ge 1$ zachodzi $|\mathbb{N}^k| = \aleph_0$. Jawną bijekcją $\mathbb{N} \times \mathbb{N} \to \mathbb{N}$ jest funkcja parująca Cantora:
+    \[
+        \pi(m, n) = \frac{(m + n)(m + n + 1)}{2} + n.
+    \]
+    \item \textbf{Suma przeliczalnej rodziny:} Jeśli dla każdego $n \in \mathbb{N}$ zbiór $A_n$ jest co najwyżej przeliczalny, to suma $\bigcup_{n \in \mathbb{N}} A_n$ jest co najwyżej przeliczalna.
+    \item \textbf{Zbiór skończonych ciągów (słów):} Jeśli $1 \le |A| \le \aleph_0$, to zbiór wszystkich skończonych ciągów o wyrazach ze zbioru $A$, oznaczany przez $A^{<\omega} = \bigcup_{n=0}^{\infty} A^n$, ma moc $\aleph_0$.
+    \item \textbf{Zbiór skończonych podzbiorów:} Jeśli $|A| = \aleph_0$, to rodzina wszystkich skończonych podzbiorów zbioru $A$, oznaczana przez $[A]^{<\omega}$ lub $\mathcal{P}_{\mathrm{fin}}(A)$, ma moc $\aleph_0$.
+\end{enumerate}
+\end{twierdzenie}
+
+\subsection{Sprytne techniki dowodzenia przeliczalności w zadaniach}
+
+W zaawansowanych zadaniach z analizy, topologii czy algebry przeliczalność danej rodziny obiektów dowodzi się najczęściej jednym z poniższych sposobów:
+
+\begin{itemize}
+    \item \textbf{Kodowanie skończonymi ciągami liczb naturalnych ($X \hookrightarrow \mathbb{N}^{<\omega}$):} Jeśli każdy element badanego zbioru $X$ można jednoznacznie opisać skończoną listą parametrów z $\mathbb{N}$ (lub $\mathbb{Z}$, $\mathbb{Q}$), to odwzorowanie przypisujące obiektowi jego kod jest iniekcją $X \hookrightarrow \mathbb{N}^{<\omega}$. Na mocy Twierdzenia \ref{tw:przeliczalne} (punkt 5) otrzymujemy $|X| \le \aleph_0$.
+    \item \textbf{Kodowanie rozkładem na czynniki pierwsze:} Aby zapisać jawną iniekcję z $\mathbb{N}^{<\omega}$ w $\mathbb{N}$, ciągowi $(n_1, n_2, \dots, n_k)$ przypisujemy liczbę $p_1^{n_1 + 1} p_2^{n_2 + 1} \cdots p_k^{n_k + 1}$, gdzie $p_i$ to $i$-ta liczba pierwsza (wykładnik $n_i + 1 \ge 1$ pozwala odróżnić zera na końcu ciągu). Z jednoznaczności rozkładu na czynniki pierwsze jest to iniekcja w $\mathbb{N}$.
+    \item \textbf{Parametryzacja gęstym podzbiorem $\mathbb{Q}$ (trik analizy matematycznej):} Gdy mamy rodzinę $\mathcal{F}$ parami rozłącznych niepustych przedziałów otwartych w $\mathbb{R}$, z każdego przedziału $I \in \mathcal{F}$ wybieramy pewną liczbę wymierną $q_I \in I \cap \mathbb{Q}$. Ponieważ przedziały są rozłączne, przypisanie $I \mapsto q_I$ jest iniekcją $\mathcal{F} \hookrightarrow \mathbb{Q}$, więc $|\mathcal{F}| \le \aleph_0$.
+    \begin{itemize}
+        \item \emph{Wniosek 1:} Zbiór punktów nieciągłości dowolnej funkcji monotonicznej $f : \mathbb{R} \to \mathbb{R}$ jest co najwyżej przeliczalny (w każdym punkcie nieciągłości $x$ granice jednostronne spełniają $f(x^-) < f(x^+)$, więc przedziały otwarte $(f(x^-), f(x^+))$ są niepuste i parami rozłączne!).
+        \item \emph{Wniosek 2:} Zbiór wartości właściwych ekstremów lokalnych dowolnej funkcji $f : \mathbb{R} \to \mathbb{R}$ jest co najwyżej przeliczalny (każdemu właściwemu maksimum lokalnemu odpowiada otwarty przedział o końcach wymiernych, na którym jest ono maksimum globalnym).
+    \end{itemize}
+\end{itemize}
+
+% ==============================================================================
+\section{Twierdzenie Cantora i twierdzenie Cantora-Bernsteina}
+
+\subsection{Twierdzenie Cantora-Bernsteina}
+
+\begin{twierdzenie}[Cantora-Bernsteina / Schrödera-Bernsteina]\label{tw:cb}
+Jeśli dla zbiorów $A$ i $B$ istnieją iniekcje $f : A \hookrightarrow B$ oraz $g : B \hookrightarrow A$ (tzn. $|A| \le |B|$ oraz $|B| \le |A|$), to zbiory $A$ i $B$ są równoliczne ($|A| = |B|$, czyli istnieje bijekcja $h : A \to B$).
+\end{twierdzenie}
+
+\begin{uwaga}[Znaczenie praktyczne]
+Twierdzenie Cantora-Bernsteina jest najważniejszym narzędziem obliczeniowym w teorii mocy:
+\begin{enumerate}
+    \item Jego dowód jest całkowicie konstruktywny i \textbf{nie wymaga aksjomatu wyboru}.
+    \item Zamiast mozolnie konstruować pojedynczą bijekcję między dwoma zbiorami (co przy końcach przedziałów czy skokach wymaga często rozbicia na podciągi), budujemy dwie proste iniekcje $A \hookrightarrow B$ oraz $B \hookrightarrow A$.
+\end{enumerate}
+\end{uwaga}
+
+\begin{wniosek}[Zasada kanapki i wersja dla surjekcji]
+\begin{enumerate}
+    \item \textbf{Zasada kanapki:} Jeśli $B_1 \subseteq B \subseteq A$ oraz $A \sim B_1$, to $A \sim B$. (Dowód: włożenie $B \hookrightarrow A$ jest iniekcją, a bijekcja $A \to B_1 \subseteq B$ daje iniekcję $A \hookrightarrow B$).
+    \item \textbf{Wersja dla surjekcji:} Jeśli istnieją surjekcje $p : A \twoheadrightarrow B$ oraz $q : B \twoheadrightarrow A$, to $|A| = |B|$ (wynika natychmiast z Wniosku \ref{wn:surjekcja-iniekcja} i Twierdzenia \ref{tw:cb}).
+\end{enumerate}
+\end{wniosek}
+
+\begin{przyklad}[Klasyczne zastosowania zasady kanapki]
+\begin{itemize}
+    \item \textbf{Odcinki $(0, 1)$, $[0, 1]$ oraz prosta $\mathbb{R}$:} Wiemy, że $(0, 1) \sim \mathbb{R}$ (np. przez bijekcję $x \mapsto \mathrm{tg}(\pi(x - \frac{1}{2}))$). Ponieważ $(0, 1) \subseteq [0, 1] \subseteq \mathbb{R}$ oraz $(0, 1) \sim \mathbb{R}$, z zasady kanapki natychmiast otrzymujemy $|[0, 1]| = |(0, 1)| = |\mathbb{R}| = \mathfrak{c}$.
+    \item \textbf{Kwadrat $[0, 1]^2$ i odcinek $[0, 1]$:} Iniekcja $[0, 1] \hookrightarrow [0, 1]^2$ dana wzorem $x \mapsto (x, 0)$ daje $\mathfrak{c} \le |[0, 1]^2|$. Z drugiej strony, zapisując $x, y \in [0, 1)$ w rozwinięciu dziesiętnym bez okresu $(9)$: $x = 0{,}x_1 x_2 x_3 \dots$ oraz $y = 0{,}y_1 y_2 y_3 \dots$, przypisanie $(x, y) \mapsto 0{,}x_1 y_1 x_2 y_2 x_3 y_3 \dots$ jest iniekcją $[0, 1)^2 \hookrightarrow [0, 1]$ (brak okresu $(9)$ gwarantuje jednoznaczność odczytu!). Zatem $|[0, 1]^2| = \mathfrak{c}$, a przez indukcję $|\mathbb{R}^n| = \mathfrak{c}$ dla każdego $n \ge 1$.
+\end{itemize}
+\end{przyklad}
+
+\subsection{Twierdzenie Cantora i metoda przekątniowa}
+
+\begin{twierdzenie}[Cantora]\label{tw:cantor}
+Dla dowolnego zbioru $A$ (również pustego oraz nieskończonego) moc zbioru potęgowego $\mathcal{P}(A)$ jest ostro większa od mocy zbioru $A$:
+\[
+    |A| < |\mathcal{P}(A)|.
+\]
+\end{twierdzenie}
+
+\begin{proof}[Szkic dowodu (metoda przekątniowa Cantora)]
+Odwzorowanie $x \mapsto \{x\}$ jest iniekcją $A \hookrightarrow \mathcal{P}(A)$, więc $|A| \le |\mathcal{P}(A)|$. Przypuśćmy nie wprost, że istnieje surjekcja $f : A \twoheadrightarrow \mathcal{P}(A)$. Zdefiniujmy \emph{zbiór przekątniowy}:
+\[
+    D = \{x \in A : x \notin f(x)\} \in \mathcal{P}(A).
+\]
+Ponieważ $f$ jest surjekcją, istnieje element $a \in A$ taki, że $f(a) = D$. Sprawdzamy, czy $a \in D$:
+\[
+    a \in D \iff a \notin f(a) \iff a \notin D,
+\]
+co daje sprzeczność. Zatem żadna surjekcja (a tym bardziej bijekcja) z $A$ na $\mathcal{P}(A)$ nie istnieje.
+\end{proof}
+
+\begin{wniosek}[Konsekwencje twierdzenia Cantora]
+\begin{enumerate}
+    \item \textbf{Zbiór potęgowy $\mathcal{P}(\mathbb{N})$ jest nieprzeliczalny:} $|\mathbb{N}| = \aleph_0 < |\mathcal{P}(\mathbb{N})| = 2^{\aleph_0} = \mathfrak{c}$. Ponieważ $\mathcal{P}(\mathbb{N}) \sim \{0, 1\}^{\mathbb{N}}$ (poprzez funkcję charakterystyczną $\mathbf{1}_A : \mathbb{N} \to \{0, 1\}$), zbiór wszystkich ciągów binarnych ma moc $\mathfrak{c}$.
+    \item \textbf{Nieskończona hierarchia mocy:} Iterując operację zbioru potęgowego, otrzymujemy nieskończony, ściśle rosnący ciąg liczb kardynalnych:
+    \[
+        \aleph_0 < 2^{\aleph_0} = \mathfrak{c} < 2^{\mathfrak{c}} < 2^{2^{\mathfrak{c}}} < \dots
+    \]
+    \item \textbf{Antynomia Cantora (nieistnienie zbioru wszystkich zbiorów):} Gdyby istniał zbiór $V$ zawierający wszystkie zbiory, zachodziłoby $\mathcal{P}(V) \subseteq V$, skąd $|\mathcal{P}(V)| \le |V|$, co przeczy Twierdzeniu \ref{tw:cantor}.
+\end{enumerate}
+\end{wniosek}
+
+\subsection{Arytmetyka liczb kardynalnych — kompendium wzorów}
+
+Dla liczb kardynalnych $\mathfrak{m} = |A|$, $\mathfrak{n} = |B|$, $\mathfrak{p} = |C|$ definiujemy działania:
+\[
+    \mathfrak{m} + \mathfrak{n} = |A \sqcup B| \text{ (suma rozłączna)}, \qquad
+    \mathfrak{m} \cdot \mathfrak{n} = |A \times B|, \qquad
+    \mathfrak{m}^{\mathfrak{n}} = |A^B| = |\{f : B \to A\}|.
+\]
+
+\begin{twierdzenie}[Prawa arytmetyki kardynalnej]
+\begin{enumerate}
+    \item \textbf{Prawa potęgowania} (prawdziwe bez aksjomatu wyboru):
+    \[
+        \mathfrak{m}^{\mathfrak{n} + \mathfrak{p}} = \mathfrak{m}^{\mathfrak{n}} \cdot \mathfrak{m}^{\mathfrak{p}}, \qquad
+        (\mathfrak{m} \cdot \mathfrak{n})^{\mathfrak{p}} = \mathfrak{m}^{\mathfrak{p}} \cdot \mathfrak{n}^{\mathfrak{p}}, \qquad
+        (\mathfrak{m}^{\mathfrak{n}})^{\mathfrak{p}} = \mathfrak{m}^{\mathfrak{n} \cdot \mathfrak{p}}.
+    \]
+    \item \textbf{Dodawanie i mnożenie mocy nieskończonych} (przy aksjomacie wyboru): Jeśli $\mathfrak{m}, \mathfrak{n} \ge 1$ oraz przynajmniej jedna z tych mocy jest nieskończona, to:
+    \[
+        \mathfrak{m} + \mathfrak{n} = \mathfrak{m} \cdot \mathfrak{n} = \max(\mathfrak{m}, \mathfrak{n}).
+    \]
+\end{enumerate}
+\end{twierdzenie}
+
+\begin{wniosek}[Najważniejsze rachunki dla $\aleph_0$, $\mathfrak{c}$ i $2^{\mathfrak{c}}$]\label{wn:rachunki}
+Poniższe równości pozwalają błyskawicznie obliczać moce przestrzeni funkcyjnych i produktowych:
+\begin{enumerate}
+    \item \textbf{Arytmetyka $\aleph_0$:} Dla każdego $n \ge 1$ zachodzi $\aleph_0 + n = \aleph_0 + \aleph_0 = n \cdot \aleph_0 = \aleph_0 \cdot \aleph_0 = \aleph_0^n = \aleph_0$.
+    \item \textbf{Arytmetyka $\mathfrak{c}$:} Dla każdego $n \ge 1$ zachodzi $\mathfrak{c} + n = \mathfrak{c} + \aleph_0 = \mathfrak{c} + \mathfrak{c} = \aleph_0 \cdot \mathfrak{c} = \mathfrak{c} \cdot \mathfrak{c} = \mathfrak{c}^n = \mathfrak{c}$.
+    \item \textbf{Potęgi o wykładniku $\aleph_0$:} Dla dowolnej mocy $\mathfrak{m}$ spełniającej $2 \le \mathfrak{m} \le \mathfrak{c}$ zachodzi:
+    \[
+        \mathfrak{m}^{\aleph_0} = \mathfrak{c}.
+    \]
+    \emph{Dowód:} $\mathfrak{c} = 2^{\aleph_0} \le \mathfrak{m}^{\aleph_0} \le \mathfrak{c}^{\aleph_0} = (2^{\aleph_0})^{\aleph_0} = 2^{\aleph_0 \cdot \aleph_0} = 2^{\aleph_0} = \mathfrak{c}$, skąd z Twierdzenia \ref{tw:cb} mamy $\mathfrak{m}^{\aleph_0} = \mathfrak{c}$.\\
+    \emph{Wniosek:} Zbiory $\{0, 1\}^{\mathbb{N}}$, $\mathbb{N}^{\mathbb{N}}$, $\mathbb{Z}^{\mathbb{N}}$, $\mathbb{Q}^{\mathbb{N}}$ oraz $\mathbb{R}^{\mathbb{N}}$ mają dokładnie tę samą moc $\mathfrak{c}$!
+    \item \textbf{Potęgi o wykładniku $\mathfrak{c}$:} Dla dowolnej mocy $\mathfrak{m}$ spełniającej $2 \le \mathfrak{m} \le 2^{\mathfrak{c}}$ zachodzi:
+    \[
+        \mathfrak{m}^{\mathfrak{c}} = 2^{\mathfrak{c}}.
+    \]
+    \emph{Dowód:} $2^{\mathfrak{c}} \le \mathfrak{m}^{\mathfrak{c}} \le (2^{\mathfrak{c}})^{\mathfrak{c}} = 2^{\mathfrak{c} \cdot \mathfrak{c}} = 2^{\mathfrak{c}}$.\\
+    \emph{Wniosek:} Zbiór wszystkich funkcji $\mathbb{R} \to \mathbb{R}$ (czyli $\mathbb{R}^{\mathbb{R}}$), zbiór wszystkich funkcji $\mathbb{R} \to \mathbb{N}$ oraz zbiór potęgowy $\mathcal{P}(\mathbb{R}) \sim \{0, 1\}^{\mathbb{R}}$ mają tę samą moc $2^{\mathfrak{c}}$.
+\end{enumerate}
+\end{wniosek}
+
+\subsection{Katalog przykładów zbiorów o danej mocy (zestawienie do zadań)}
+
+Poniższa tabela gromadzi klasyczne przykłady zbiorów pojawiające się na kolokwiach i egzaminach wraz z główną ideą dowodu ich mocy.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Moc} & \textbf{Przykłady zbiorów} & \textbf{Kluczowa idea / uzasadnienie} \\
+\midrule
+$\aleph_0$ & $\mathbb{N}$, $\mathbb{Z}$, $\mathbb{Q}$, $\mathbb{Q}^n$ ($n \ge 1$) & Funkcja parująca Cantora; ułamki jako pary $(p, q) \in \mathbb{Z} \times \mathbb{N}_+$. \\
+\addlinespace[3pt]
+$\aleph_0$ & Skończone ciągi $\mathbb{N}^{<\omega}$, $\mathbb{Q}^{<\omega}$ oraz skończone podzbiory $[\mathbb{N}]^{<\omega}$, $[\mathbb{Q}]^{<\omega}$ & Przeliczalna suma zbiorów przeliczalnych $\bigcup_{n=0}^{\infty} \mathbb{N}^n$; kodowanie liczbami pierwszymi. \\
+\addlinespace[3pt]
+$\aleph_0$ & Wielomiany o współczynnikach wymiernych $\mathbb{Q}[x]$ i liczby algebraiczne $\overline{\mathbb{Q}}$ & Wielomian stopnia $n$ to element $\mathbb{Q}^{n+1}$; każdy niezerowy wielomian ma skończenie wiele pierwiastków. \\
+\addlinespace[3pt]
+$\aleph_0$ & Kule w $\mathbb{R}^n$ o wymiernych środkach i wymiernych promieniach (baza topologii) & Wzajemnie jednoznaczna odpowiedniość z $\mathbb{Q}^n \times \mathbb{Q}_+$. \\
+\addlinespace[3pt]
+$\aleph_0$ & Ciągi z $\mathbb{N}^{\mathbb{N}}$ od pewnego miejsca równe $0$ oraz ciągi okresowe o wyrazach z $\mathbb{Q}$ & Każdemu ciągowi odpowiada jego skończony blok początkowy lub okres w $\mathbb{Q}^{<\omega}$. \\
+\midrule
+$\mathfrak{c}$ & Odcinki $(0, 1)$, $[0, 1]$, prosta $\mathbb{R}$, przestrzenie $\mathbb{R}^n$ ($n \ge 1$), $\mathbb{C}$ & Rozwinięcia dwójkowe/dziesiętne; zasada kanapki i potęgowanie $\mathfrak{c}^n = \mathfrak{c}$. \\
+\addlinespace[3pt]
+$\mathfrak{c}$ & Liczby niewymierne $\mathbb{R} \setminus \mathbb{Q}$, liczby przestępne $\mathbb{R} \setminus \overline{\mathbb{Q}}$ & Zasada absorpcji: $\mathfrak{c} - \aleph_0 = \mathfrak{c}$ (Wniosek \ref{wn:absorpcja}). \\
+\addlinespace[3pt]
+$\mathfrak{c}$ & Zbiór Cantora $\mathcal{C}$ oraz zbiór nieskończonych podzbiorów $\mathbb{N}$ ($\mathcal{P}(\mathbb{N}) \setminus [\mathbb{N}]^{<\omega}$) & Liczby z $\mathcal{C}$ to rozwinięcia trójkowe z cyfr $\{0, 2\}$ ($\sim \{0,2\}^{\mathbb{N}}$); dla podzbiorów: $\mathfrak{c} - \aleph_0 = \mathfrak{c}$. \\
+\addlinespace[3pt]
+$\mathfrak{c}$ & Przestrzenie ciągów $\{0, 1\}^{\mathbb{N}}$, $\mathbb{N}^{\mathbb{N}}$, $\mathbb{Q}^{\mathbb{N}}$, $\mathbb{R}^{\mathbb{N}}$ & Wniosek \ref{wn:rachunki}: $2^{\aleph_0} = \aleph_0^{\aleph_0} = \mathfrak{c}^{\aleph_0} = \mathfrak{c}$. \\
+\addlinespace[3pt]
+$\mathfrak{c}$ & Wszystkie funkcje \textbf{ciągłe} $C(\mathbb{R}, \mathbb{R})$ oraz wszystkie funkcje \textbf{monotoniczne} $\mathbb{R} \to \mathbb{R}$ & Funkcja ciągła jest wyznaczona przez wartości na gęstym zbiorze $\mathbb{Q}$ (iniekcja w $\mathbb{R}^{\mathbb{Q}}$ mocy $\mathfrak{c}^{\aleph_0} = \mathfrak{c}$). \\
+\addlinespace[3pt]
+$\mathfrak{c}$ & Wszystkie zbiory \textbf{otwarte}, \textbf{domknięte} oraz \textbf{borelowskie} w $\mathbb{R}$ (lub $\mathbb{R}^n$) & Każdy zbiór otwarty jest sumą podrodziny przeliczalnej bazy $\mathcal{B}$ (surjekcja $\mathcal{P}(\mathcal{B}) \twoheadrightarrow \mathcal{O}(\mathbb{R})$). \\
+\addlinespace[3pt]
+$\mathfrak{c}$ & Wszystkie permutacje $\mathbb{N}$ (bijekcje $\mathbb{N} \to \mathbb{N}$) oraz relacje równoważności na $\mathbb{N}$ & Z góry $\le |\mathbb{N}^{\mathbb{N}}| = \mathfrak{c}$ (lub $|\mathcal{P}(\mathbb{N}^2)| = \mathfrak{c}$); z dołu kodowanie ciągów binarnych z $\{0, 1\}^{\mathbb{N}}$. \\
+\midrule
+$2^{\mathfrak{c}}$ & Zbiór potęgowy $\mathcal{P}(\mathbb{R})$ oraz zbiory funkcji $\{0, 1\}^{\mathbb{R}}$, $\mathbb{N}^{\mathbb{R}}$, $\mathbb{R}^{\mathbb{R}}$ & Wniosek \ref{wn:rachunki}: $2^{\mathfrak{c}} = \aleph_0^{\mathfrak{c}} = \mathfrak{c}^{\mathfrak{c}}$. \\
+\addlinespace[3pt]
+$2^{\mathfrak{c}}$ & Wszystkie bijekcje $\mathbb{R} \to \mathbb{R}$ oraz relacje równoważności na $\mathbb{R}$ & Z góry $\le |\mathbb{R}^{\mathbb{R}}| = 2^{\mathfrak{c}}$; z dołu dla $A \subseteq (0, \infty)$ zamieniamy $x \leftrightarrow -x$ dla $x \in A$. \\
+\addlinespace[3pt]
+$2^{2^{\mathfrak{c}}}$ & Zbiór wszystkich topologii na $\mathbb{R}$ oraz zbiór wszystkich $\sigma$-ciał na $\mathbb{R}$ & Podrodziny $\mathcal{P}(\mathcal{P}(\mathbb{R}))$; z dołu ultrafiltry na $\mathbb{R}$ (tw. Pospíšila). \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Algorytm rozwiązywania trudnych zadań z mocy zbiorów}
+
+Gdy w zadaniu należy wyznaczyć moc nietypowego zbioru $X$:
+\begin{enumerate}
+    \item \textbf{Postaw hipotezę:} Zastanów się, ile niezależnych wyborów definiuje pojedynczy element zbioru $X$:
+    \begin{itemize}
+        \item skończenie wiele parametrów z przeliczalnego zbioru $\implies$ obstawiamy $\aleph_0$,
+        \item przeliczalnie wiele parametrów ze zbioru mocy $\le \mathfrak{c}$ $\implies$ obstawiamy $\mathfrak{c}$,
+        \item nieprzeliczalnie wiele (continuum) niezależnych wyborów $\implies$ obstawiamy $2^{\mathfrak{c}}$.
+    \end{itemize}
+    \item \textbf{Oszacuj $|X|$ z góry:} Zakoduj każdy element $x \in X$ jako element znanego zbioru $Y$ (szukając iniekcji $X \hookrightarrow Y$) lub przedstaw $X$ jako obraz znanego zbioru $Y$ (szukając surjekcji $Y \twoheadrightarrow X$).
+    \item \textbf{Oszacuj $|X|$ z dołu:} Zbuduj prostą rodzinę obiektów w $X$ sparametryzowaną znanym zbiorem $Z$ o tej samej mocy co $Y$ (iniekcja $Z \hookrightarrow X$).
+    \item \textbf{Domknij dowód:} Powołaj się na Twierdzenie Cantora-Bernsteina (Twierdzenie \ref{tw:cb}), otrzymując $|X| = |Y|$.
+\end{enumerate}
+
+\end{document}
