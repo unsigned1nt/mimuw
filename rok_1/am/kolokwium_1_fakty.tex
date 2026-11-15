@@ -1,0 +1,288 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[a4paper]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\setlist[itemize]{label=-, topsep=3pt, itemsep=2pt}
+\setlist[enumerate]{topsep=3pt, itemsep=2pt}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[hidelinks]{hyperref}
+
+\theoremstyle{plain}
+\newtheorem{fakt}{Fakt}
+
+\theoremstyle{definition}
+\newtheorem*{wyjasnienie}{Wyjaśnienie}
+\newtheorem*{uwaga}{Uwaga}
+
+\title{\textbf{Analiza Matematyczna I.1} -- podstawowe fakty\\ oraz ich wyjaśnienia}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+% \vspace{2.5em}
+\newpage
+
+\section{Podstawowe nierówności algebraiczne i analityczne}
+
+\begin{fakt}[Nierówności między średnimi: HM--GM--AM--QM]
+Jeżeli $a_1, \dots, a_n > 0$, to
+\[
+\frac{n}{a_1^{-1} + \dots + a_n^{-1}} \leqslant \sqrt[n]{a_1 \cdots a_n} \leqslant \frac{a_1 + \dots + a_n}{n} \leqslant \sqrt{\frac{a_1^2 + \dots + a_n^2}{n}}.
+\]
+\end{fakt}
+
+\begin{wyjasnienie}
+Równości w powyższym łańcuchu zachodzą wtedy i tylko wtedy, gdy $a_1 = a_2 = \dots = a_n$. Prawa nierówność ($\mathrm{AM} \leqslant \mathrm{QM}$) wynika bezpośrednio z nierówności Cauchy'ego--Schwarza zastosowanej do ciągów $(a_1, \dots, a_n)$ oraz $(1, \dots, 1)$. Lewa nierówność ($\mathrm{HM} \leqslant \mathrm{GM}$) wynika ze środkowej ($\mathrm{GM} \leqslant \mathrm{AM}$) zastosowanej do odwrotności $a_1^{-1}, \dots, a_n^{-1}$.
+\end{wyjasnienie}
+
+\begin{fakt}[Nierówność Cauchy'ego--Schwarza]
+Dla dowolnych liczb rzeczywistych $a_1, \dots, a_n$ oraz $b_1, \dots, b_n$ zachodzi
+\[
+\left(\sum_{k=1}^n a_k b_k\right)^2 \leqslant \left(\sum_{k=1}^n a_k^2\right)\left(\sum_{k=1}^n b_k^2\right).
+\]
+\end{fakt}
+
+\begin{wyjasnienie}
+Równość zachodzi wtedy i tylko wtedy, gdy ciągi $(a_k)$ i $(b_k)$ są proporcjonalne. W dowodzie elementarnym rozważa się nieujemną funkcję kwadratową $P(t) = \sum_{k=1}^n (a_k t + b_k)^2 \geqslant 0$, której wyróżnik spełnia warunek $\Delta \leqslant 0$.
+\end{wyjasnienie}
+
+\begin{fakt}[Nierówność Bernoulliego i oszacowanie górne]
+Jeżeli $x > -1$ oraz $n \in \mathbb{Z}$, $n \geqslant 0$, to
+\[
+(1 + x)^n \geqslant 1 + nx.
+\]
+Jeżeli natomiast $-1 < x < \frac{1}{n}$ (dla $n \geqslant 1$), to
+\[
+(1 + x)^n \leqslant \frac{1}{1 - nx}.
+\]
+\end{fakt}
+
+\begin{wyjasnienie}
+Pierwszą nierówność dowodzi się przez indukcję względem $n$. Drugą otrzymuje się z pierwszej, zauważając najpierw, że $(1 + x)(1 - x) = 1 - x^2 \leqslant 1$, skąd $(1 + x)^n \leqslant \frac{1}{(1 - x)^n}$, a następnie stosując nierówność Bernoulliego w mianowniku: $(1 - x)^n \geqslant 1 - nx > 0$.
+\end{wyjasnienie}
+
+\begin{fakt}[Oszacowania funkcji wykładniczej]
+Dla każdego $x \in \mathbb{R}$ zachodzi $e^x \geqslant 1 + x$. Dla każdego $x < 1$ zachodzi $e^x \leqslant \frac{1}{1 - x}$.
+\end{fakt}
+
+\begin{wyjasnienie}
+Druga nierówność wynika z pierwszej po zastąpieniu $x$ przez $-x$: dla $x < 1$ mamy $e^{-x} \geqslant 1 - x > 0$, co po obustronnym odwróceniu daje $e^x \leqslant \frac{1}{1 - x}$.
+\end{wyjasnienie}
+
+\begin{fakt}[Oszacowania logarytmu naturalnego]
+Dla każdego $x > -1$ zachodzi
+\[
+\frac{x}{1 + x} \leqslant \ln(1 + x) \leqslant x.
+\]
+\end{fakt}
+
+\begin{wyjasnienie}
+Prawa nierówność to zlogarytmowana nierówność $1 + x \leqslant e^x$. Lewą uzyskuje się z prawej przez podstawienie $t = -\frac{x}{1 + x} > -1$: wówczas $\ln\left(\frac{1}{1 + x}\right) = \ln\left(1 - \frac{x}{1 + x}\right) \leqslant -\frac{x}{1 + x}$, co po zmianie znaku daje tezę.
+\end{wyjasnienie}
+
+\begin{fakt}[Oszacowanie silni]
+Dla każdego $n \geqslant 1$ zachodzi
+\[
+e\left(\frac{n}{e}\right)^n \leqslant n! \leqslant n e\left(\frac{n}{e}\right)^n.
+\]
+\end{fakt}
+
+\begin{wyjasnienie}
+Nierówności te dowodzi się indukcyjnie względem $n$ przy wykorzystaniu oszacowań $\left(1 + \frac{1}{n}\right)^n < e < \left(1 + \frac{1}{n}\right)^{n+1}$. Przykładowo w kroku indukcyjnym dla lewej nierówności mamy
+\[
+e\left(\frac{n+1}{e}\right)^{n+1} = e\left(\frac{n}{e}\right)^n \cdot \frac{n+1}{e}\left(1 + \frac{1}{n}\right)^n \leqslant n! \cdot \frac{n+1}{e} \cdot e = (n+1)!,
+\]
+a analogiczne przekształcenie z użyciem prawego szacowania liczby $e$ daje górne ograniczenie. Z faktu tego natychmiast wynika m.in. granica $\lim_{n\to\infty} \frac{\sqrt[n]{n!}}{n} = \frac{1}{e}$.
+\end{wyjasnienie}
+
+\section{Własności granic ciągów i granice cząstkowe}
+
+\begin{fakt}[Twierdzenie o trzech ciągach]
+Jeżeli od pewnego miejsca zachodzi $a_n \leqslant b_n \leqslant c_n$ oraz $a_n \to g$, $c_n \to g$, to $b_n \to g$.
+\end{fakt}
+
+\begin{fakt}[Zachowanie ostrych nierówności przy przejściu granicznym]
+Jeżeli $a_n \to g$ oraz $m < g < M$, to dla dostatecznie dużych $n$ zachodzi $m < a_n < M$.
+\end{fakt}
+
+\begin{wyjasnienie}
+Teza wynika bezpośrednio z definicji granicy po przyjęciu $\varepsilon = \min(g - m, M - g) > 0$. W szczególności, jeżeli $g > 0$, to od pewnego wskaźnika wszystkie wyrazy ciągu są dodatnie.
+\end{wyjasnienie}
+
+\begin{fakt}[Warunek Cauchy'ego]
+Jeżeli ciąg $(a_n)$ jest zbieżny (do granicy właściwej), to
+\[
+\forall_{\varepsilon > 0} \; \exists_{N} \; \forall_{n, m > N} \quad \lvert a_n - a_m \rvert < \varepsilon.
+\]
+\end{fakt}
+
+\begin{uwaga}
+W przestrzeniach zupełnych $\mathbb{R}$ oraz $\mathbb{C}$ warunek Cauchy'ego jest jednocześnie warunkiem wystarczającym zbieżności ciągu.
+\end{uwaga}
+
+\begin{fakt}[Potęgowanie ciągu zbieżnego]
+Jeżeli $a_n > 0$ oraz $a_n \to g \in [0, +\infty)$, to dla każdego ustalonego $p > 0$ zachodzi $a_n^p \to g^p$.
+\end{fakt}
+
+\begin{fakt}[Charakteryzacja granicy górnej]
+Dla dowolnego ciągu rzeczywistego $(a_n)$ oraz $M \in \mathbb{R}$ zachodzi równoważność
+\[
+\limsup_{n\to\infty} a_n \leqslant M \iff \forall_{\varepsilon > 0} \; \exists_{N} \; \forall_{n \geqslant N} \quad a_n < M + \varepsilon.
+\]
+\end{fakt}
+
+\begin{fakt}[Charakteryzacja granicy dolnej]
+Dla dowolnego ciągu rzeczywistego $(a_n)$ oraz $m \in \mathbb{R}$ zachodzi równoważność
+\[
+\liminf_{n\to\infty} a_n \geqslant m \iff \forall_{\varepsilon > 0} \; \exists_{N} \; \forall_{n \geqslant N} \quad a_n > m - \varepsilon.
+\]
+\end{fakt}
+
+\begin{wyjasnienie}
+Nierówność $\limsup_{n\to\infty} a_n \leqslant M$ oznacza, że powyżej poziomu $M + \varepsilon$ (dla dowolnego $\varepsilon > 0$) leży co najwyżej skończenie wiele wyrazów ciągu $(a_n)$. Należy odróżniać ten warunek od ostrej nierówności $\limsup_{n\to\infty} a_n < M$, która jest równoważna istnieniu $\varepsilon > 0$ oraz $N$ takich, że $a_n < M - \varepsilon$ dla wszystkich $n \geqslant N$. Analogiczna interpretacja dotyczy $\liminf_{n\to\infty} a_n$.
+\end{wyjasnienie}
+
+\section{Twierdzenia o średnich i twierdzenie Stolza--Cesàro}
+
+\begin{fakt}[Twierdzenie Stolza--Cesàro]
+Załóżmy, że $b_n \neq 0$, ciąg $(b_n)$ jest ściśle monotoniczny oraz spełniony jest jeden z warunków:
+\begin{itemize}
+    \item $a_n \to 0$ oraz $b_n \to 0$, albo
+    \item $b_n \to +\infty$ (lub $b_n \to -\infty$).
+\end{itemize}
+Jeżeli ponadto $\frac{a_{n+1} - a_n}{b_{n+1} - b_n} \to g$, to $\frac{a_n}{b_n} \to g$.
+\end{fakt}
+
+\begin{fakt}[Twierdzenie Cauchy'ego o średniej arytmetycznej]
+Jeżeli $a_n \to g$, to $\frac{a_1 + \dots + a_n}{n} \to g$.
+\end{fakt}
+
+\begin{wyjasnienie}
+Jest to bezpośredni wniosek z twierdzenia Stolza--Cesàro zastosowanego do ciągów $A_n = a_1 + \dots + a_n$ oraz $B_n = n$, ponieważ $\frac{A_{n+1} - A_n}{B_{n+1} - B_n} = a_{n+1} \to g$.
+\end{wyjasnienie}
+
+\begin{fakt}[Twierdzenie Cauchy'ego o średniej geometrycznej]
+Jeżeli $a_n > 0$ oraz $a_n \to g \in [0, +\infty]$, to $\sqrt[n]{a_1 \cdots a_n} \to g$.
+\end{fakt}
+
+\begin{wyjasnienie}
+Dla $g \in (0, +\infty)$ wystarczy zlogarytmować pierwiastek: $\ln \sqrt[n]{a_1 \cdots a_n} = \frac{\ln a_1 + \dots + \ln a_n}{n} \to \ln g$ na mocy ciągłości logarytmu oraz faktu o średniej arytmetycznej. Przypadki $g = 0$ oraz $g = +\infty$ wynikają z odpowiednich szacowań przez ciąg $(a_n)$ lub jego odwrotności.
+\end{wyjasnienie}
+
+\begin{fakt}[Związek ilorazu wyrazów z pierwiastkiem $n$-tego stopnia]
+Jeżeli $a_n > 0$ oraz $\frac{a_{n+1}}{a_n} \to g$, to $\sqrt[n]{a_n} \to g$.
+\end{fakt}
+
+\begin{wyjasnienie}
+Teza wynika z twierdzenia o średniej geometrycznej zastosowanego do ciągu $c_1 = a_1$ oraz $c_k = \frac{a_k}{a_{k-1}}$ dla $k \geqslant 2$, gdyż wówczas $\sqrt[n]{c_1 c_2 \cdots c_n} = \sqrt[n]{a_n}$.
+\end{wyjasnienie}
+
+\section{Liczba $e$, funkcje wykładnicza i logarytmiczna w granicach}
+
+\begin{fakt}[Monotoniczność ciągów definiujących liczbę $e$]
+Ciąg $a_n = \left(1 + \frac{1}{n}\right)^n$ jest ściśle rosnący, natomiast ciąg $b_n = \left(1 + \frac{1}{n}\right)^{n+1}$ jest ściśle malejący. Ponadto oba zbiegają do liczby $e$.
+\end{fakt}
+
+\begin{wyjasnienie}
+Monotoniczność ciągu $(a_n)$ wynika z nierówności $\mathrm{GM} < \mathrm{AM}$ zastosowanej do $n + 1$ liczb: $1, 1 + \frac{1}{n}, \dots, 1 + \frac{1}{n}$, co daje $\sqrt[n+1]{\left(1 + \frac{1}{n}\right)^n} < \frac{1 + n(1 + 1/n)}{n + 1} = 1 + \frac{1}{n+1}$. Dla ciągu $(b_n)$ rozważa się odwrotności $\frac{1}{b_n} = \left(1 - \frac{1}{n+1}\right)^{n+1}$, dla których ten sam argument daje ciąg ściśle rosnący. Ponieważ $b_n = a_n\left(1 + \frac{1}{n}\right)$, oba ciągi mają wspólną granicę $e$.
+\end{wyjasnienie}
+
+\begin{fakt}[Oszacowania liczby $e$ i odwrotności liczb naturalnych]
+Dla $n \geqslant 1$ zachodzi
+\[
+\left(1 + \frac{1}{n}\right)^n < e < \left(1 + \frac{1}{n}\right)^{n+1}.
+\]
+Po zlogarytmowaniu otrzymujemy (dla $n \geqslant 2$, a lewa nierówność już dla $n \geqslant 1$):
+\[
+\ln(n+1) - \ln(n) < \frac{1}{n} < \ln(n) - \ln(n-1).
+\]
+\end{fakt}
+
+\begin{wyjasnienie}
+Pierwszy łańcuch nierówności wynika z monotoniczności ciągów z poprzedniego faktu. Po obustronnym zlogarytmowaniu otrzymujemy $n\ln\left(\frac{n+1}{n}\right) < 1 < (n+1)\ln\left(\frac{n+1}{n}\right)$, skąd po podzieleniu przez $n$ oraz $n+1$ (i przesunięciu wskaźnika $n+1 \mapsto n$ w prawej części) otrzymujemy szacowania dla $\frac{1}{n}$. Pozwalają one oszacować sumy częściowe szeregu harmonicznego: $\ln(n+1) < \sum_{k=1}^n \frac{1}{k} < 1 + \ln n$.
+\end{wyjasnienie}
+
+\begin{fakt}[Ciągłość funkcji wykładniczej i logarytmicznej]
+Jeżeli $a_n \to g \in \mathbb{R}$, to $e^{a_n} \to e^g$. Jeżeli $b_n > 0$ spełnia $b_n \to g \in (0, \infty)$, to $\ln(b_n) \to \ln g$.
+\end{fakt}
+
+\begin{fakt}[Granice niewłaściwe funkcji wykładniczej]
+Jeżeli $a_n \to +\infty$ oraz $b_n \to -\infty$, to $e^{a_n} \to +\infty$ oraz $e^{b_n} \to 0$.
+\end{fakt}
+
+\begin{fakt}[Granice logarytmu na krańcach dziedziny]
+Jeżeli $a_n, b_n > 0$ spełniają $a_n \to 0$ oraz $b_n \to +\infty$, to $\ln a_n \to -\infty$ oraz $\ln b_n \to +\infty$.
+\end{fakt}
+
+\begin{fakt}[Granice ilorazów w zerze]
+Jeżeli $x_n \to 0$ oraz $x_n \neq 0$, to
+\[
+\lim_{n\to\infty} \frac{e^{x_n} - 1}{x_n} = 1 \qquad \text{oraz} \qquad \lim_{n\to\infty} \frac{\ln(1 + x_n)}{x_n} = 1.
+\]
+\end{fakt}
+
+\begin{wyjasnienie}
+Obie granice wynikają bezpośrednio z obustronnych nierówności dla $\exp$ i $\ln$ (fakty 4 i 5) oraz twierdzenia o trzech ciągach: dla $x_n \in (-1, 1) \setminus \{0\}$ zachodzi $\frac{1}{1 + x_n} \leqslant \frac{\ln(1 + x_n)}{x_n} \leqslant 1$ oraz $1 \leqslant \frac{e^{x_n} - 1}{x_n} \leqslant \frac{1}{1 - x_n}$.
+\end{wyjasnienie}
+
+\begin{fakt}[Symbol nieoznaczony $1^\infty$]
+Jeżeli $a_n \to 0$ oraz $a_n b_n \to g$, to $(1 + a_n)^{b_n} \to e^g$.
+\end{fakt}
+
+\begin{wyjasnienie}
+Dla $a_n > -1$ zapisujemy $(1 + a_n)^{b_n} = \exp\bigl(b_n \ln(1 + a_n)\bigr)$. Gdy $a_n \neq 0$, zachodzi rozkład $b_n \ln(1 + a_n) = a_n b_n \cdot \frac{\ln(1 + a_n)}{a_n} \to g \cdot 1 = g$ na mocy poprzedniego faktu (dla $a_n = 0$ wyraz wykładnika jest równy $0 = g$). Teza wynika następnie z ciągłości funkcji wykładniczej.
+\end{wyjasnienie}
+
+\section{Standardowe granice i hierarchia temp wzrostu}
+
+\begin{fakt}[Granica pierwiastka $n$-tego stopnia z sumy potęg]
+Dla $a_1, \dots, a_k > 0$ zachodzi
+\[
+\lim_{n\to\infty} \sqrt[n]{a_1^n + \dots + a_k^n} = \max(a_1, \dots, a_k).
+\]
+\end{fakt}
+
+\begin{wyjasnienie}
+Oznaczając $M = \max(a_1, \dots, a_k)$, otrzymujemy oszacowania $M = \sqrt[n]{M^n} \leqslant \sqrt[n]{a_1^n + \dots + a_k^n} \leqslant \sqrt[n]{k M^n} = \sqrt[n]{k} \cdot M \to M$, co kończy dowód z twierdzenia o trzech ciągach.
+\end{wyjasnienie}
+
+\begin{fakt}[Granice pierwiastków $n$-tego stopnia ze stałej i potęgi $n$]
+Jeżeli $a > 0$, to $\sqrt[n]{n^a} \to 1$ oraz $\sqrt[n]{a} \to 1$.
+\end{fakt}
+
+\begin{wyjasnienie}
+Z nierówności $\mathrm{GM} \leqslant \mathrm{AM}$ dla liczb $1, \dots, 1, \sqrt{n}, \sqrt{n}$ ($n \geqslant 2$) otrzymujemy $1 \leqslant \sqrt[n]{n} \leqslant \frac{n - 2 + 2\sqrt{n}}{n} \to 1$. Stąd $\sqrt[n]{n^a} = (\sqrt[n]{n})^a \to 1^a = 1$. Dla stałej $a > 0$ zachodzi $1 \leqslant \sqrt[n]{a} \leqslant \sqrt[n]{n}$ (gdy $a \geqslant 1$) lub $1 \geqslant \sqrt[n]{a} \geqslant \frac{1}{\sqrt[n]{n}}$ (gdy $0 < a < 1$) dla dostatecznie dużych $n$.
+\end{wyjasnienie}
+
+\begin{fakt}[Porównanie wzrostu logarytmu i potęgi]
+Jeżeli $a, b > 0$, to $\frac{(\ln n)^a}{n^b} \to 0$.
+\end{fakt}
+
+\begin{wyjasnienie}
+Zapisujemy $\frac{(\ln n)^a}{n^b} = \left(\frac{\ln n}{n^{b/a}}\right)^a$. Oznaczając $c = \frac{b}{a} > 0$ oraz $t_n = n^c \to +\infty$, mamy $\frac{\ln n}{n^c} = \frac{1}{c}\frac{\ln t_n}{t_n}$. Z nierówności $\ln(1 + x) \leqslant x$ zastosowanej do $x = \sqrt{t_n} - 1$ wynika $\frac{1}{2}\ln t_n \leqslant \sqrt{t_n} - 1 < \sqrt{t_n}$, skąd $0 \leqslant \frac{\ln t_n}{t_n} \leqslant \frac{2}{\sqrt{t_n}} \to 0$.
+\end{wyjasnienie}
+
+\begin{fakt}[Porównanie wzrostu wykładniczego i potęgowego]
+Jeżeli $a \in \mathbb{R}$ oraz $\lvert b \rvert < 1$, to $b^n n^a \to 0$.
+\end{fakt}
+
+\begin{wyjasnienie}
+Dla $b = 0$ granica jest równa $0$. Dla $0 < \lvert b \rvert < 1$ oznaczamy $x_n = \lvert b \rvert^n n^a > 0$ i obliczamy granicę ilorazu kolejnych wyrazów: $\frac{x_{n+1}}{x_n} = \lvert b \rvert \left(1 + \frac{1}{n}\right)^a \to \lvert b \rvert < 1$, co implikuje $x_n \to 0$.
+\end{wyjasnienie}
+
+\begin{fakt}[Wzrost silni względem funkcji wykładniczej i $n^n$]
+Jeżeli $b > 0$, to $\frac{b^n}{n!} \to 0$ oraz $\frac{n!}{n^n} \to 0$.
+\end{fakt}
+
+\begin{wyjasnienie}
+Dla $x_n = \frac{b^n}{n!}$ zachodzi $\frac{x_{n+1}}{x_n} = \frac{b}{n + 1} \to 0 < 1$, skąd $x_n \to 0$. Z kolei z oszacowania silni (fakt 6) wynika $0 < \frac{n!}{n^n} \leqslant \frac{n e}{e^n} \to 0$ na mocy poprzedniego faktu dla $b = e^{-1} < 1$.
+\end{wyjasnienie}
+
+\end{document}
